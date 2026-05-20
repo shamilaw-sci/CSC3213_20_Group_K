@@ -1,0 +1,109 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #f8f7fb;
+  --surface: #ffffff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.12);
+  --accent-border: rgba(170, 59, 255, 0.35);
+  --social-bg: rgba(244, 243, 236, 0.65);
+  --shadow: rgba(0, 0, 0, 0.08) 0 16px 40px -24px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/1.6 var(--sans);
+  letter-spacing: 0.02em;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #cbd5e1;
+    --text-h: #f8fafc;
+    --bg: #0f172a;
+    --surface: #111827;
+    --border: #1f2937;
+    --code-bg: #1f2937;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.18);
+    --accent-border: rgba(192, 132, 252, 0.45);
+    --social-bg: rgba(30, 41, 59, 0.75);
+    --shadow: rgba(0, 0, 0, 0.35) 0 16px 40px -24px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+#root {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: clamp(2.4rem, 3.5vw, 4rem);
+  letter-spacing: -0.05em;
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(1.45rem, 2vw, 1.75rem);
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+p {
+  margin: 0;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.94rem;
+  line-height: 1.6;
+  padding: 4px 8px;
+  background: var(--code-bg);
+  border-radius: 8px;
+}
