@@ -36,10 +36,8 @@ const analyzeResume = async (req, res) => {
       analysis = await analyzeResumeText(resumeText);
     } catch (err) {
       console.error("Resume Analyzer Error:", err?.message || err);
-      const msg = (err && err.message && String(err.message)) || "";
-      const lower = msg.toLowerCase();
-      if (lower.includes("gemini") || lower.includes("gemini_api_key") || lower.includes("api key") || lower.includes("not configured")) {
-        return res.status(503).json({ message: "AI service not configured or unavailable." });
+      if (err?.code === "AI_SERVICE_UNAVAILABLE") {
+        return res.status(503).json({ message: "AI service unavailable. Try again later." });
       }
       return res.status(500).json({ message: "Unable to analyze the resume right now." });
     }

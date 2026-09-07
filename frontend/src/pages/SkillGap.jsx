@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { AlertCircle, RefreshCw } from "lucide-react";
 import "./SkillGap.css";
 
 function CircularProgress({ percentage, size = 84 }) {
@@ -80,8 +81,19 @@ export default function SkillGap() {
 
         {error && (
           <div className="sg-error" role="alert">
-            <span>{error}</span>
-            {profileRequired && <button onClick={() => navigate('/profile')}>Complete profile</button>}
+            <AlertCircle size={22} aria-hidden="true" />
+            <div className="sg-error-content">
+              <h2>{profileRequired ? "Complete your profile" : "AI service temporarily unavailable"}</h2>
+              <p>{profileRequired ? error : "We couldn't complete this request right now. Please try again in a moment."}</p>
+            </div>
+            {profileRequired ? (
+              <button onClick={() => navigate('/profile')}>Complete profile</button>
+            ) : (
+              <button onClick={() => window.location.reload()}>
+                <RefreshCw size={15} aria-hidden="true" />
+                Try Again
+              </button>
+            )}
           </div>
         )}
 

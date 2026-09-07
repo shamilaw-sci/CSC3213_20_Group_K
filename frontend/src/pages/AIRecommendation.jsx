@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { BrainCircuit } from "lucide-react";
+import { AlertCircle, BrainCircuit, RefreshCw } from "lucide-react";
 import { IconChart, IconBriefcase, IconBook, IconBrain } from "../components/icons/Icons";
 import "./AIRecommendation.css";
 
@@ -147,9 +147,19 @@ function AIRecommendation() {
 
         {error && (
           <div className="ai-error ai-profile-error" role="alert">
-            <span>{error}</span>
+            <AlertCircle size={24} aria-hidden="true" />
+            <div className="ai-error-content">
+              <h2>{profileRequired ? "Complete your profile" : "AI service temporarily unavailable"}</h2>
+              <p>{profileRequired ? error : "We couldn't complete this request right now. Please try again in a moment."}</p>
+            </div>
             {profileRequired && (
               <button onClick={() => navigate("/profile")}>Go to Profile</button>
+            )}
+            {!profileRequired && (
+              <button type="button" onClick={fetchRecommendations} disabled={loading}>
+                <RefreshCw size={15} aria-hidden="true" />
+                Try Again
+              </button>
             )}
           </div>
         )}

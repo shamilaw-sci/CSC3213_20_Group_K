@@ -1,9 +1,28 @@
 const { GoogleGenAI, Type } = require("@google/genai");
 const { CANONICAL_CAREERS, normalizeCareer } = require("./careerUtils");
 
+const createGeminiError = (message, cause) => {
+  const error = new Error(message);
+  error.code = "AI_SERVICE_UNAVAILABLE";
+  error.cause = cause;
+  return error;
+};
+
+const getGeminiFailureCategory = (error) => {
+  const status = Number(error?.status || error?.code);
+  const message = String(error?.message || "").toLowerCase();
+
+  if (status === 401 || message.includes("api key") || message.includes("authentication")) return "401 invalid API key";
+  if (status === 403 || message.includes("permission")) return "403 permission denied";
+  if (status === 404 || message.includes("not found")) return "404 model not found";
+  if (status === 429 || message.includes("quota") || message.includes("rate")) return "429 quota or rate limit";
+  if (message.includes("network") || message.includes("fetch") || message.includes("econn")) return "network failure";
+  return "request failure";
+};
+
 const getGeminiClient = () => {
   if (!process.env.GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is not configured");
+    throw createGeminiError("GEMINI_API_KEY is not configured");
   }
 
   return new GoogleGenAI({
@@ -11,11 +30,11 @@ const getGeminiClient = () => {
   });
 };
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "models/gemini-3.6-flash";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
 
 const generateCareerRecommendation = async (profile) => {
   if (!process.env.GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is not configured");
+    throw createGeminiError("GEMINI_API_KEY is not configured");
   }
 
   try {
@@ -69,14 +88,14 @@ const generateCareerRecommendation = async (profile) => {
 
     return parsed;
   } catch (error) {
-    console.error("Gemini Error:", error?.message || error);
-    throw error;
+    console.error("Gemini request failed:", getGeminiFailureCategory(error));
+    throw createGeminiError("Gemini recommendation request failed", error);
   }
 };
 
 const generateChatResponse = async (profile, message) => {
   if (!process.env.GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is not configured");
+    throw createGeminiError("GEMINI_API_KEY is not configured");
   }
 
   try {
@@ -94,8 +113,8 @@ const generateChatResponse = async (profile, message) => {
 
     return response.text.trim();
   } catch (error) {
-    console.error("Gemini Chat Error:", error?.message || error);
-    throw error;
+    console.error("Gemini chat request failed:", getGeminiFailureCategory(error));
+    throw createGeminiError("Gemini chat request failed", error);
   }
 };
 

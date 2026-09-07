@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { AlertCircle, RefreshCw } from "lucide-react";
 import { IconBrain, IconMessage, IconLogo } from "../components/icons/Icons";
 import "./AIChat.css";
 
@@ -51,6 +52,7 @@ function AIChat() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [profileRequired, setProfileRequired] = useState(false);
+  const [lastSubmittedMessage, setLastSubmittedMessage] = useState("");
   const navigate = useNavigate();
   const bottomRef = useRef(null);
 
@@ -70,6 +72,7 @@ function AIChat() {
     }
 
     setMessages((current) => [...current, { sender: "user", text: trimmedMessage }]);
+    setLastSubmittedMessage(trimmedMessage);
     setMessage("");
     setError("");
     setProfileRequired(false);
@@ -159,15 +162,25 @@ function AIChat() {
                 <div className="ai-thinking-content"><span></span><span></span><span></span></div>
               </article>
             )}
+            {error && (
+              <div className="ai-chat-error" role="alert">
+                <AlertCircle size={22} aria-hidden="true" />
+                <div className="ai-chat-error-content">
+                  <h2>{profileRequired ? "Complete your profile" : "AI service temporarily unavailable"}</h2>
+                  <p>{profileRequired ? error : "We couldn't complete this request right now. Please try again in a moment."}</p>
+                </div>
+                {profileRequired ? (
+                  <button type="button" onClick={() => navigate("/profile")}>Go to Profile</button>
+                ) : (
+                  <button type="button" onClick={() => sendMessage(lastSubmittedMessage)} disabled={!lastSubmittedMessage || loading}>
+                    <RefreshCw size={15} aria-hidden="true" />
+                    Try Again
+                  </button>
+                )}
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
-
-          {error && (
-            <div className="ai-chat-error" role="alert">
-              <span>{error}</span>
-              {profileRequired && <button type="button" onClick={() => navigate("/profile")}>Go to Profile</button>}
-            </div>
-          )}
 
           <form className="ai-chat-composer" onSubmit={handleSubmit}>
             <textarea

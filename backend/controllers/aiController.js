@@ -14,20 +14,22 @@ const getAIRecommendation = async (req, res) => {
       });
     }
 
-    // Ask Gemini for recommendations
-    const recommendation = await generateCareerRecommendation(profile);
+    let recommendation;
+    try {
+      recommendation = await generateCareerRecommendation(profile);
+    } catch (error) {
+      console.error("AI Recommendation Gemini Error:", error?.message || error);
+      if (error?.code === "AI_SERVICE_UNAVAILABLE") {
+        return res.status(503).json({ message: "AI service unavailable. Try again later." });
+      }
+      throw error;
+    }
 
     res.status(200).json({
       recommendation,
     });
   } catch (error) {
     console.error("AI Recommendation Error:", error);
-    const msg = (error && error.message && String(error.message)) || "";
-    const lower = msg.toLowerCase();
-    if (lower.includes("gemini") || lower.includes("gemini_api_key") || lower.includes("api key") || lower.includes("not configured")) {
-      return res.status(503).json({ message: "AI service not configured or unavailable." });
-    }
-
     res.status(500).json({ message: error.message });
   }
 };

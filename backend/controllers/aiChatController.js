@@ -21,16 +21,20 @@ const chatWithAI = async (req, res) => {
       });
     }
 
-    const response = await generateChatResponse(profile, message.trim());
+    let response;
+    try {
+      response = await generateChatResponse(profile, message.trim());
+    } catch (error) {
+      console.error("AI Career Chat Gemini Error:", error?.message || error);
+      if (error?.code === "AI_SERVICE_UNAVAILABLE") {
+        return res.status(503).json({ message: "AI service unavailable. Try again later." });
+      }
+      throw error;
+    }
 
     return res.status(200).json({ response });
   } catch (error) {
     console.error("AI Career Chat Error:", error);
-    const msg = (error && error.message && String(error.message)) || "";
-    const lower = msg.toLowerCase();
-    if (lower.includes("gemini") || lower.includes("gemini_api_key") || lower.includes("api key") || lower.includes("not configured")) {
-      return res.status(503).json({ message: "AI service not configured or unavailable." });
-    }
     return res.status(500).json({ message: "Unable to generate an AI career response right now." });
   }
 };

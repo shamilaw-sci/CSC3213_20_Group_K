@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { FileSearch } from "lucide-react";
+import { AlertCircle, FileSearch, RefreshCw } from "lucide-react";
 import { IconUpload, IconDocument } from "../components/icons/Icons";
 import "./ResumeAnalyzer.css";
 
@@ -129,8 +129,8 @@ function ResumeAnalyzer() {
               onDrop={handleDrop}
             >
               <div className="resume-upload-icon"><IconUpload /></div>
-              <h2>{file ? "Your resume is ready" : "Drop your resume here"}</h2>
-              <p>{file ? file.name : "Drag and drop a PDF, or browse from your device."}</p>
+              <h2>{file && error ? "Resume selected successfully" : file ? "Your resume is ready" : "Drop your resume here"}</h2>
+              <p>{file && error ? `${file.name} is ready. The PDF does not need to be uploaded again.` : file ? file.name : "Drag and drop a PDF, or browse from your device."}</p>
               <button type="button" onClick={() => inputRef.current?.click()}>Browse File</button>
               <input
                 ref={inputRef}
@@ -143,9 +143,18 @@ function ResumeAnalyzer() {
             </div>
 
             {file && <div className="resume-file-name"><span>PDF</span>{file.name}</div>}
-            {error && <div className="resume-error" role="alert">{error}</div>}
+            {error && (
+              <div className="resume-error" role="alert">
+                <AlertCircle size={22} aria-hidden="true" />
+                <div className="resume-error-content">
+                  <h3>AI service temporarily unavailable</h3>
+                  <p>We couldn't complete the analysis right now. Your selected PDF is still ready to try again.</p>
+                </div>
+              </div>
+            )}
             <button className="resume-analyze-button" type="button" disabled={!file} onClick={analyzeResume}>
-              Analyze Resume <span>→</span>
+              {error ? <RefreshCw size={16} aria-hidden="true" /> : null}
+              {error ? "Try Analysis Again" : "Analyze Resume"}
             </button>
           </section>
         )}

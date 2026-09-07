@@ -1,22 +1,30 @@
 const { GoogleGenAI, Type } = require("@google/genai");
 
+const createGeminiError = (message, cause) => {
+  const error = new Error(message);
+  error.code = "AI_SERVICE_UNAVAILABLE";
+  error.cause = cause;
+  return error;
+};
+
 const analyzeResume = async (resumeText) => {
   if (!process.env.GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is not configured");
+    throw createGeminiError("GEMINI_API_KEY is not configured");
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-  const model = process.env.GEMINI_MODEL || "models/gemini-3.6-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.5-flash";
 
   const prompt = `You are an expert ATS resume reviewer and career advisor. Analyse the resume text below objectively and return a JSON object with the fields requested. Be concise and include practical, specific advice based only on the resume.\n\nResume text:\n---\n${resumeText}\n---`;
 
-  const response = await ai.models.generateContent({
-    model,
-    contents: prompt,
-    config: {
-      responseMimeType: "application/json",
-      responseSchema: {
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
         type: Type.OBJECT,
         properties: {
           atsScore: { type: Type.NUMBER },
@@ -46,11 +54,14 @@ const analyzeResume = async (resumeText) => {
           "interviewPreparation",
           "next30DaysPlan",
         ],
+        },
       },
-    },
-  });
+    });
 
-  return JSON.parse(response.text);
+    return JSON.parse(response.text);
+  } catch (error) {
+    throw createGeminiError("Gemini resume analysis request failed", error);
+  }
 };
 
 module.exports = {
