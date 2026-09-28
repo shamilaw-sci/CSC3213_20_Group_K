@@ -2,23 +2,40 @@
  * StudentProfile.jsx
  * ===================
  * Page that wraps the ProfileForm component.
- * Collects student data and navigates to recommendations.
+ * Collects student data, saves to MongoDB, and navigates to recommendations.
  * 
  * Author: Thimira (Student Profile & Career Recommendation Module)
  */
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileForm from "../components/ProfileForm";
+import { createStudentProfile } from "../api/recommendationApi";
 
 const StudentProfile = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Handle form submission — navigate to recommendations with profile data
-  const handleProfileSubmit = (profileData) => {
-    // Store profile data in sessionStorage so the Recommendations page can access it
-    sessionStorage.setItem("studentProfile", JSON.stringify(profileData));
-    // Navigate to the recommendations page
-    navigate("/recommendations");
+  // Handle form submission — save to MongoDB and navigate to recommendations
+  const handleProfileSubmit = async (profileData) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Save profile to MongoDB
+      const savedProfile = await createStudentProfile(profileData);
+
+      // Store profile data in sessionStorage for the Recommendations page
+      sessionStorage.setItem("studentProfile", JSON.stringify(profileData));
+      sessionStorage.setItem("studentProfileId", savedProfile._id);
+
+      // Navigate to the recommendations page
+      navigate("/recommendations");
+    } catch (err) {
+      console.error("Failed to save profile:", err);
+      setError("Failed to save your profile. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,8 +51,21 @@ const StudentProfile = () => {
         </p>
       </div>
 
+      {/* Error message display */}
+      {error && (
+        <div className="error-banner" style={{ 
+          padding: "15px", 
+          backgroundColor: "#fee", 
+          color: "#c00", 
+          borderRadius: "4px",
+          marginBottom: "20px"
+        }}>
+          {error}
+        </div>
+      )}
+
       {/* Profile Form Component */}
-      <ProfileForm onSubmit={handleProfileSubmit} />
+      <ProfileForm onSubmit={handleProfileSubmit} disabled={isLoading} />
     </div>
   );
 };

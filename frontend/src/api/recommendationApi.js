@@ -1,228 +1,139 @@
 /**
  * recommendationApi.js
  * =====================
- * This file contains sample/static career data and a function
- * that simulates fetching career recommendations from a backend API.
+ * API client for communicating with the backend.
+ * Handles student profiles and career recommendations.
  * 
- * In the future, you can replace the static data with real API calls.
+ * Endpoints:
+ * - POST /api/students - Create a new student profile
+ * - GET /api/students/:id - Get a student profile
+ * - POST /api/recommendations - Get career recommendations
  * 
  * Author: Thimira (Student Profile & Career Recommendation Module)
  */
 
-// ─── Sample Career Data ────────────────────────────────────────
-// Each career object has a title, a category (job type), a work area,
-// related skills, education requirements, and a description.
-const sampleCareers = [
-  {
-    id: 1,
-    title: "Software Engineer",
-    category: "Full-Time",
-    workArea: "Technology",
-    relatedSkills: ["JavaScript", "React", "Node.js", "Python", "Problem Solving"],
-    educationLevels: ["Bachelor's Degree", "Master's Degree"],
-    description: "Design, develop, and maintain software applications and systems.",
-    averageSalary: "$95,000 - $140,000",
-  },
-  {
-    id: 2,
-    title: "Data Scientist",
-    category: "Full-Time",
-    workArea: "Technology",
-    relatedSkills: ["Python", "Machine Learning", "Statistics", "SQL", "Data Visualization"],
-    educationLevels: ["Bachelor's Degree", "Master's Degree", "PhD"],
-    description: "Analyze complex data sets to identify trends and drive business decisions.",
-    averageSalary: "$100,000 - $150,000",
-  },
-  {
-    id: 3,
-    title: "UX/UI Designer",
-    category: "Full-Time",
-    workArea: "Design",
-    relatedSkills: ["Figma", "Adobe XD", "CSS", "User Research", "Prototyping"],
-    educationLevels: ["Diploma", "Bachelor's Degree"],
-    description: "Create intuitive and visually appealing user interfaces and experiences.",
-    averageSalary: "$70,000 - $110,000",
-  },
-  {
-    id: 4,
-    title: "Digital Marketing Specialist",
-    category: "Full-Time",
-    workArea: "Marketing",
-    relatedSkills: ["SEO", "Content Writing", "Social Media", "Google Analytics", "Email Marketing"],
-    educationLevels: ["Diploma", "Bachelor's Degree"],
-    description: "Plan and execute digital marketing campaigns to grow brand awareness.",
-    averageSalary: "$50,000 - $80,000",
-  },
-  {
-    id: 5,
-    title: "Cybersecurity Analyst",
-    category: "Full-Time",
-    workArea: "Technology",
-    relatedSkills: ["Network Security", "Ethical Hacking", "Firewalls", "Linux", "Risk Assessment"],
-    educationLevels: ["Bachelor's Degree", "Master's Degree"],
-    description: "Protect organizational systems and data from cyber threats and vulnerabilities.",
-    averageSalary: "$85,000 - $130,000",
-  },
-  {
-    id: 6,
-    title: "Freelance Web Developer",
-    category: "Freelance",
-    workArea: "Technology",
-    relatedSkills: ["HTML", "CSS", "JavaScript", "React", "WordPress"],
-    educationLevels: ["Diploma", "Bachelor's Degree", "Self-Taught"],
-    description: "Build websites and web applications for clients on a project basis.",
-    averageSalary: "$40,000 - $100,000",
-  },
-  {
-    id: 7,
-    title: "Business Analyst",
-    category: "Full-Time",
-    workArea: "Business",
-    relatedSkills: ["Data Analysis", "SQL", "Communication", "Problem Solving", "Excel"],
-    educationLevels: ["Bachelor's Degree", "Master's Degree"],
-    description: "Bridge the gap between IT and business by analyzing processes and requirements.",
-    averageSalary: "$70,000 - $105,000",
-  },
-  {
-    id: 8,
-    title: "Graphic Designer",
-    category: "Freelance",
-    workArea: "Design",
-    relatedSkills: ["Photoshop", "Illustrator", "Typography", "Branding", "Creativity"],
-    educationLevels: ["Diploma", "Bachelor's Degree"],
-    description: "Create visual content for branding, advertising, and digital media.",
-    averageSalary: "$45,000 - $75,000",
-  },
-  {
-    id: 9,
-    title: "Cloud Solutions Architect",
-    category: "Full-Time",
-    workArea: "Technology",
-    relatedSkills: ["AWS", "Azure", "Docker", "Kubernetes", "Networking"],
-    educationLevels: ["Bachelor's Degree", "Master's Degree"],
-    description: "Design and oversee cloud computing strategies and infrastructure for organizations.",
-    averageSalary: "$120,000 - $170,000",
-  },
-  {
-    id: 10,
-    title: "Content Writer",
-    category: "Part-Time",
-    workArea: "Marketing",
-    relatedSkills: ["Content Writing", "SEO", "Research", "Communication", "Creativity"],
-    educationLevels: ["Diploma", "Bachelor's Degree", "Self-Taught"],
-    description: "Produce engaging written content for blogs, websites, and social media platforms.",
-    averageSalary: "$35,000 - $60,000",
-  },
-];
+const API_BASE_URL = "http://localhost:5000/api";
 
-
-// ─── Recommendation Engine (Static / Simulated) ───────────────
 /**
- * getRecommendations(profileData)
- * 
- * Takes the student's profile data and returns a list of recommended careers
- * with a match percentage and a reason for the recommendation.
- * 
- * @param {Object} profileData - The student's profile information
- * @param {string} profileData.name - Student's name
- * @param {string[]} profileData.skills - Array of skills the student has
- * @param {string[]} profileData.interests - Array of student's interests
- * @param {string} profileData.educationLevel - Student's current education level
- * @param {string} profileData.preferredJobType - Preferred job type (Full-Time, Part-Time, Freelance)
- * @param {string} profileData.preferredWorkArea - Preferred work area (Technology, Design, etc.)
- * 
- * @returns {Promise<Array>} Array of career recommendation objects
+ * Create a new student profile in MongoDB
+ * @param {Object} profileData - Student profile data
+ * @returns {Promise<Object>} - Created profile with MongoDB _id
  */
-export const getRecommendations = (profileData) => {
-  // Simulate an API delay (like a real backend would have)
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Convert student skills and interests to lowercase for comparison
-      const studentSkills = profileData.skills.map((s) => s.toLowerCase().trim());
-      const studentInterests = profileData.interests.map((i) => i.toLowerCase().trim());
+export const createStudentProfile = async (profileData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData),
+    });
 
-      // Score each career based on how well it matches the student's profile
-      const scoredCareers = sampleCareers.map((career) => {
-        let score = 0;          // Total match score
-        let maxScore = 0;       // Maximum possible score
-        const reasons = [];     // Reasons for recommending this career
+    if (!response.ok) {
+      throw new Error(`Failed to create profile: ${response.statusText}`);
+    }
 
-        // ── 1. Skill Match (worth up to 40 points) ──
-        maxScore += 40;
-        const careerSkillsLower = career.relatedSkills.map((s) => s.toLowerCase());
-        const matchedSkills = studentSkills.filter((skill) =>
-          careerSkillsLower.some((cs) => cs.includes(skill) || skill.includes(cs))
-        );
-        const skillMatchRatio = matchedSkills.length / career.relatedSkills.length;
-        score += Math.round(skillMatchRatio * 40);
-        if (matchedSkills.length > 0) {
-          reasons.push(`Your skills in ${matchedSkills.join(", ")} match this career`);
-        }
+    const data = await response.json();
+    return data.studentProfile; // Return the created profile with _id
+  } catch (error) {
+    console.error("Error creating student profile:", error);
+    throw error;
+  }
+};
 
-        // ── 2. Interest Match (worth up to 25 points) ──
-        maxScore += 25;
-        const interestMatch = studentInterests.some(
-          (interest) =>
-            career.title.toLowerCase().includes(interest) ||
-            career.workArea.toLowerCase().includes(interest) ||
-            career.description.toLowerCase().includes(interest) ||
-            career.relatedSkills.some((s) => s.toLowerCase().includes(interest))
-        );
-        if (interestMatch) {
-          score += 25;
-          reasons.push("Aligns with your interests");
-        }
+/**
+ * Get career recommendations for a student profile
+ * @param {Object} profileData - Student profile data
+ * @returns {Promise<Array>} - Array of career recommendations
+ */
+export const getRecommendations = async (profileData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/recommendations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData),
+    });
 
-        // ── 3. Education Level Match (worth up to 15 points) ──
-        maxScore += 15;
-        if (career.educationLevels.includes(profileData.educationLevel)) {
-          score += 15;
-          reasons.push(`Suitable for your ${profileData.educationLevel} education`);
-        }
+    if (!response.ok) {
+      throw new Error(`Failed to get recommendations: ${response.statusText}`);
+    }
 
-        // ── 4. Job Type Match (worth up to 10 points) ──
-        maxScore += 10;
-        if (
-          profileData.preferredJobType === "Any" ||
-          career.category === profileData.preferredJobType
-        ) {
-          score += 10;
-          reasons.push(`Matches your preferred ${career.category} job type`);
-        }
+    const data = await response.json();
+    const recommendations = (data.recommendations || []).map((rec) => ({
+      ...rec,
+      relatedSkills: rec.relatedSkills || rec.requiredSkills || [],
+      id: rec.id || rec._id || "",
+    }));
+    return recommendations; // Return normalized recommendations array
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    throw error;
+  }
+};
 
-        // ── 5. Work Area Match (worth up to 10 points) ──
-        maxScore += 10;
-        if (
-          profileData.preferredWorkArea === "Any" ||
-          career.workArea === profileData.preferredWorkArea
-        ) {
-          score += 10;
-          reasons.push(`Falls within your preferred ${career.workArea} work area`);
-        }
+/**
+ * Get a student profile by ID
+ * @param {string} studentId - MongoDB student document ID
+ * @returns {Promise<Object>} - Student profile
+ */
+export const getStudentProfile = async (studentId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${studentId}`);
 
-        // Calculate the match percentage
-        const matchPercentage = Math.round((score / maxScore) * 100);
+    if (!response.ok) {
+      throw new Error(`Failed to get profile: ${response.statusText}`);
+    }
 
-        // Build the recommendation reason string
-        const reason =
-          reasons.length > 0
-            ? reasons.join(". ") + "."
-            : "General career opportunity based on your profile.";
+    const data = await response.json();
+    return data.studentProfile;
+  } catch (error) {
+    console.error("Error fetching student profile:", error);
+    throw error;
+  }
+};
 
-        return {
-          ...career,
-          matchPercentage,
-          reason,
-          matchedSkills,
-        };
-      });
+/**
+ * Update a student profile
+ * @param {string} studentId - MongoDB student document ID
+ * @param {Object} updates - Updated profile data
+ * @returns {Promise<Object>} - Updated profile
+ */
+export const updateStudentProfile = async (studentId, updates) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${studentId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
 
-      // Sort careers by match percentage (highest first) and return top results
-      const sortedCareers = scoredCareers
-        .sort((a, b) => b.matchPercentage - a.matchPercentage)
-        .filter((career) => career.matchPercentage > 0); // Only show careers with some match
+    if (!response.ok) {
+      throw new Error(`Failed to update profile: ${response.statusText}`);
+    }
 
-      resolve(sortedCareers);
-    }, 800); // 800ms simulated delay
-  });
+    const data = await response.json();
+    return data.studentProfile;
+  } catch (error) {
+    console.error("Error updating student profile:", error);
+    throw error;
+  }
+};
+
+/**
+ * Delete a student profile
+ * @param {string} studentId - MongoDB student document ID
+ * @returns {Promise<Object>} - Deletion response
+ */
+export const deleteStudentProfile = async (studentId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/students/${studentId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete profile: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting student profile:", error);
+    throw error;
+  }
 };

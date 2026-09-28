@@ -15,8 +15,8 @@
  * Author: Thimira (Student Profile & Career Recommendation Module)
  */
 
-// Import the static career data
-const careerData = require("../data/careerData");
+// Import the Career model from MongoDB
+const Career = require("../models/Career");
 
 /**
  * POST /api/recommendations
@@ -39,7 +39,7 @@ const careerData = require("../data/careerData");
  *     recommendations: [ ... ]
  *   }
  */
-const getRecommendations = (req, res) => {
+const getRecommendations = async (req, res) => {
   try {
     // ── Step 1: Extract the student's profile data from the request body ──
     const {
@@ -67,17 +67,28 @@ const getRecommendations = (req, res) => {
       });
     }
 
-    // ── Step 3: Convert student skills & interests to lowercase for comparison ──
+    // ── Step 3: Fetch all careers from MongoDB ──
+    // Changed from static careerData to querying the database
+    const careerData = await Career.find({});
+
+    if (careerData.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No careers found in database. Please run the migration: npm run migrate:careers",
+      });
+    }
+
+    // ── Step 4: Convert student skills & interests to lowercase for comparison ──
     const studentSkills = skills.map((s) => s.toLowerCase().trim());
     const studentInterests = interests.map((i) => i.toLowerCase().trim());
 
-    // ── Step 4: Score each career against the student's profile ──
+    // ── Step 5: Score each career against the student's profile ──
     const scoredCareers = careerData.map((career) => {
       let score = 0;        // Total match score (out of 100)
       let maxScore = 0;     // Maximum possible score
       const reasons = [];   // Array of reasons why this career was recommended
 
-      // ──── 4a. Skill Match (up to 40 points) ────
+      // ──── 5a. Skill Match (up to 40 points) ────
       // Compare student's skills with the career's required skills
       maxScore += 40;
       const careerSkillsLower = career.relatedSkills.map((s) => s.toLowerCase());
@@ -100,7 +111,7 @@ const getRecommendations = (req, res) => {
         );
       }
 
-      // ──── 4b. Interest Match (up to 25 points) ────
+      // ──── 5b. Interest Match (up to 25 points) ────
       // Check if any of the student's interests align with the career
       maxScore += 25;
       const interestMatch = studentInterests.some(
@@ -116,7 +127,7 @@ const getRecommendations = (req, res) => {
         reasons.push("Aligns with your interests");
       }
 
-      // ──── 4c. Education Level Match (up to 15 points) ────
+      // ──── 5c. Education Level Match (up to 15 points) ────
       // Check if the student's education level is accepted by this career
       maxScore += 15;
       if (career.educationLevels.includes(educationLevel)) {
@@ -124,7 +135,7 @@ const getRecommendations = (req, res) => {
         reasons.push(`Suitable for your ${educationLevel} education`);
       }
 
-      // ──── 4d. Job Type Match (up to 10 points) ────
+      // ──── 5d. Job Type Match (up to 10 points) ────
       // Check if the career type matches the student's preference
       maxScore += 10;
       if (preferredJobType === "Any" || career.category === preferredJobType) {
@@ -132,7 +143,7 @@ const getRecommendations = (req, res) => {
         reasons.push(`Matches your preferred ${career.category} job type`);
       }
 
-      // ──── 4e. Work Area Match (up to 10 points) ────
+      // ──── 5e. Work Area Match (up to 10 points) ────
       // Check if the career's work area matches the student's preference
       maxScore += 10;
       if (preferredWorkArea === "Any" || career.workArea === preferredWorkArea) {
@@ -140,7 +151,7 @@ const getRecommendations = (req, res) => {
         reasons.push(`Falls within your preferred ${career.workArea} work area`);
       }
 
-      // ── Step 5: Calculate the final match percentage ──
+      // ── Step 6: Calculate the final match percentage ──
       const matchPercentage = Math.round((score / maxScore) * 100);
 
       // Build the recommendation reason string
@@ -151,10 +162,12 @@ const getRecommendations = (req, res) => {
 
       // Return the career with its match data
       return {
-        id: career.id,
+        _id: career._id,
+        id: career._id.toString(),
         title: career.title,
         matchPercentage,
         reason,
+        relatedSkills: career.relatedSkills,
         requiredSkills: career.relatedSkills,
         matchedSkills,
         category: career.category,
@@ -164,13 +177,13 @@ const getRecommendations = (req, res) => {
       };
     });
 
-    // ── Step 6: Sort by match percentage (highest first) ──
+    // ── Step 7: Sort by match percentage (highest first) ──
     // Only include careers that have some match (> 0%)
     const recommendations = scoredCareers
       .sort((a, b) => b.matchPercentage - a.matchPercentage)
       .filter((career) => career.matchPercentage > 0);
 
-    // ── Step 7: Send the response ──
+    // ── Step 8: Send the response ──
     console.log(`✅ Generated ${recommendations.length} recommendations for ${name}`);
 
     res.status(200).json({

@@ -2,10 +2,7 @@
  * Recommendations.jsx
  * =====================
  * Displays career recommendations based on the student's profile.
- * Uses the static recommendation API to generate results.
- * 
- * Note: The existing file is named Recommendation.jsx (singular).
- *       This creates the Recommendations.jsx (plural) as requested.
+ * Fetches recommendations from the MongoDB-backed backend API.
  * 
  * Author: Thimira (Student Profile & Career Recommendation Module)
  */
@@ -20,26 +17,36 @@ const Recommendations = () => {
   // State for recommendations and loading
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [profileData, setProfileData] = useState(null);
   const [filter, setFilter] = useState("all"); // Filter: all, excellent, good, fair
 
-  // Load profile data from sessionStorage on mount
+  // Load profile data from sessionStorage on mount and fetch recommendations
   useEffect(() => {
-    const stored = sessionStorage.getItem("studentProfile");
-    if (!stored) {
-      // No profile data — redirect back to profile page
-      navigate("/student-profile");
-      return;
-    }
+    const loadRecommendations = async () => {
+      try {
+        const stored = sessionStorage.getItem("studentProfile");
+        if (!stored) {
+          // No profile data — redirect back to profile page
+          navigate("/student-profile");
+          return;
+        }
 
-    const profile = JSON.parse(stored);
-    setProfileData(profile);
+        const profile = JSON.parse(stored);
+        setProfileData(profile);
 
-    // Fetch recommendations using our static API
-    getRecommendations(profile).then((results) => {
-      setRecommendations(results);
-      setLoading(false);
-    });
+        // Fetch recommendations from the backend using MongoDB data
+        const results = await getRecommendations(profile);
+        setRecommendations(results);
+      } catch (err) {
+        console.error("Error fetching recommendations:", err);
+        setError("Failed to fetch recommendations. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRecommendations();
   }, [navigate]);
 
   // Filter recommendations based on match quality
@@ -50,6 +57,20 @@ const Recommendations = () => {
     return true; // "all"
   });
 
+  // Error state
+  if (error) {
+    return (
+      <div className="recommendations-page" id="recommendations-page">
+        <div className="error-state">
+          <h2>❌ {error}</h2>
+          <button onClick={() => navigate("/student-profile")} className="btn-primary">
+            Go Back to Profile
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Loading state
   if (loading) {
     return (
@@ -57,7 +78,7 @@ const Recommendations = () => {
         <div className="loading-state">
           <div className="loading-state__spinner"></div>
           <h2>Analyzing your profile...</h2>
-          <p>Our AI is finding the best career matches for you.</p>
+          <p>Our AI is finding the best career matches for you from our MongoDB database.</p>
         </div>
       </div>
     );

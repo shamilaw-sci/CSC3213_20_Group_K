@@ -17,6 +17,7 @@ const Home = () => {
   const features = [
     {
       icon: "🎯",
+      
       title: "Smart Matching",
       desc: "Our AI engine matches your skills and interests with the best career paths.",
     },

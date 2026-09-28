@@ -77,7 +77,7 @@ const CareerCard = ({ career }) => {
         <div className="career-card__skills">
           <h4 className="career-card__skills-title">Required Skills</h4>
           <div className="career-card__skills-list">
-            {relatedSkills.map((skill, i) => {
+            {(relatedSkills || []).map((skill, i) => {
               const isMatched = matchedSkills?.some(
                 (ms) => ms.toLowerCase().includes(skill.toLowerCase()) || skill.toLowerCase().includes(ms.toLowerCase())
               );
