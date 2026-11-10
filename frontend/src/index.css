@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ═══════════════════════════════════════════════════════
    CAREER INTELLIGENCE — LIGHT-THEME DESIGN SYSTEM
    ═══════════════════════════════════════════════════════ */
@@ -440,3 +441,6 @@ img { max-width: 100%; display: block; }
     animation-iteration-count: 1 !important;
   }
 }
+=======
+@import "tailwindcss";
+>>>>>>> ashen-learning-report-module
