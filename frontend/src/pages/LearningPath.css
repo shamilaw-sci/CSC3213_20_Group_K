@@ -1,0 +1,53 @@
+.lp-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.42rem 1rem 0.42rem 0.45rem;
+  border: 1px solid rgba(191, 211, 239, 0.9);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #315276;
+  box-shadow: 0 4px 14px rgba(37, 74, 122, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.lp-back-icon {
+  display: grid;
+  width: 2.15rem;
+  height: 2.15rem;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #eff6ff, #dceafe);
+  color: #2563eb;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.lp-back-link:hover {
+  transform: translateY(-1px);
+  border-color: #9fc0ef;
+  background: #ffffff;
+  color: #1d4ed8;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.13);
+}
+
+.lp-back-link:hover .lp-back-icon {
+  transform: translateX(-2px);
+  background: linear-gradient(145deg, #347cf0, #245fd2);
+  color: #ffffff;
+}
+
+.lp-back-link:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.45);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-back-link,
+  .lp-back-icon {
+    transition: none;
+  }
+}

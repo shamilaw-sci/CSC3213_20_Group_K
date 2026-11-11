@@ -33,10 +33,7 @@
 /* Page Container */
 .cd-wrapper {
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 8% 0%, rgba(191, 219, 254, 0.56), transparent 34rem),
-    radial-gradient(ellipse at 92% 16%, rgba(224, 231, 255, 0.5), transparent 32rem),
-    linear-gradient(180deg, #f6f8fc 0%, #f8fafc 100%);
+  background: transparent;
   color: var(--cd-text-main);
   padding: 2.5rem 1rem 4rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -54,7 +51,8 @@
 .cd-header-section {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.65rem;
+  padding: 0.25rem 0 0.45rem;
 }
 
 .cd-badge-pill {
@@ -62,32 +60,47 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(99, 102, 241, 0.12));
-  border: 1px solid rgba(59, 130, 246, 0.25);
-  color: #2563eb;
+  background: #111827;
+  border: 1px solid #111827;
+  color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 700;
   border-radius: 9999px;
   width: fit-content;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  box-shadow: 0 5px 14px rgba(17, 24, 39, 0.16);
+}
+
+.cd-badge-pill svg {
+  color: #fb923c;
 }
 
 .cd-page-title {
-  font-size: clamp(2.1rem, 4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.4rem, 5vw, 3.65rem);
+  font-weight: 850;
+  letter-spacing: -0.055em;
   color: var(--cd-text-main);
-  line-height: 1.2;
+  line-height: 1.04;
   margin: 0;
 }
 
+.cd-page-title::after {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 4px;
+  margin-top: 0.85rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f97316, #fb923c);
+}
+
 .cd-page-subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--cd-text-muted);
   margin: 0;
-  max-width: 680px;
-  line-height: 1.5;
+  max-width: 720px;
+  line-height: 1.65;
 }
 
 /* Career Selector Toolbar */
@@ -98,12 +111,47 @@
     radial-gradient(ellipse at 100% 0%, rgba(219, 234, 254, 0.72), transparent 36%),
     linear-gradient(135deg, #ffffff 0%, #f8faff 58%, #f1f6ff 100%);
   border: 1px solid #dbe5f2;
-  border-radius: 22px;
-  padding: 1.2rem;
+  border-radius: 24px;
+  padding: 1.4rem;
   box-shadow: 0 16px 40px rgba(31, 55, 90, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: column;
+  gap: 0.9rem;
+}
+
+.cd-selector-heading,
+.cd-tabs-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+}
+
+.cd-selector-heading h2 {
+  margin: 0.18rem 0 0;
+  color: #14243b;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.cd-selector-kicker {
+  color: #3975d7;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.cd-role-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.75rem;
+  color: #3767aa;
+  background: rgba(219, 234, 254, 0.7);
+  border: 1px solid rgba(191, 219, 254, 0.9);
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 750;
 }
 
 .cd-filter-bar {
@@ -112,25 +160,27 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0 0 0.95rem;
-  border-bottom: 1px solid rgba(203, 213, 225, 0.68);
+  padding: 0.8rem;
+  border: 1px solid rgba(220, 230, 243, 0.95);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.68);
 }
 
 .cd-category-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  padding: 0.25rem;
-  border-radius: 999px;
-  background: rgba(241, 245, 249, 0.82);
-  border: 1px solid rgba(226, 232, 240, 0.85);
+  padding: 0.2rem;
+  border-radius: 14px;
+  background: #edf3fb;
+  border: 1px solid #e2eaf5;
 }
 
 .cd-category-btn {
-  padding: 0.48rem 0.95rem;
-  font-size: 0.825rem;
-  font-weight: 600;
-  border-radius: 9999px;
+  padding: 0.58rem 0.88rem;
+  font-size: 0.79rem;
+  font-weight: 700;
+  border-radius: 11px;
   border: 1px solid transparent;
   background: transparent;
   color: var(--cd-text-muted);
@@ -145,10 +195,10 @@
 }
 
 .cd-category-btn.active {
-  background: linear-gradient(135deg, #17243a, #263b59);
+  background: linear-gradient(135deg, #3478eb, #245ed0);
   color: #ffffff;
-  border-color: #17243a;
-  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  border-color: #2d69d5;
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .cd-search-input-wrap {
@@ -170,7 +220,7 @@
   padding: 0.65rem 0.9rem 0.65rem 2.35rem;
   font-size: 0.875rem;
   border: 1px solid var(--cd-card-border);
-  border-radius: var(--cd-radius-md);
+  border-radius: 13px;
   background: rgba(255, 255, 255, 0.78);
   color: var(--cd-text-main);
   outline: none;
@@ -186,9 +236,9 @@
 /* Career Selector Pills */
 .cd-career-pills {
   display: flex;
-  gap: 0.65rem;
+  gap: 0.75rem;
   overflow-x: auto;
-  padding: 0.85rem 0.1rem 0.35rem;
+  padding: 0.35rem 0.1rem 0.65rem;
   scroll-snap-type: x proximity;
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
@@ -207,19 +257,19 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.68rem 1.05rem;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid #dbe4ef;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: 0.7rem 1rem;
+  background: #ffffff;
+  border: 1px solid #d6e0ee;
+  border-radius: 15px;
+  font-size: 0.84rem;
+  font-weight: 700;
   color: var(--cd-text-muted);
   cursor: pointer;
   white-space: nowrap;
   transition: var(--cd-transition);
   user-select: none;
   scroll-snap-align: start;
-  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.025);
+  box-shadow: 0 3px 8px rgba(22, 45, 78, 0.045);
 }
 
 .cd-career-pill:hover {
@@ -231,11 +281,33 @@
 }
 
 .cd-career-pill.active {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8 72%, #244fc2);
-  border-color: #1d4ed8;
+  position: relative;
+  background: linear-gradient(135deg, #367cf0 0%, #225fd2 100%);
+  border-color: #2868d6;
   color: #ffffff;
-  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 9px 20px rgba(37, 99, 235, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
+}
+
+.cd-career-pill.active .cd-pill-icon {
+  color: #ffffff;
+}
+
+.cd-tabs-heading {
+  margin-top: 0.15rem;
+  margin-bottom: -0.4rem;
+}
+
+.cd-tabs-heading > span:first-child {
+  color: #253b59;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.cd-tabs-hint {
+  color: #8190a5;
+  font-size: 0.76rem;
+  font-weight: 550;
 }
 
 .cd-pill-icon {
@@ -245,6 +317,31 @@
 }
 
 @media (max-width: 640px) {
+  .cd-selector-heading h2 {
+    font-size: 1.15rem;
+  }
+
+  .cd-filter-bar {
+    padding: 0.65rem;
+  }
+
+  .cd-category-chips {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .cd-category-btn {
+    white-space: nowrap;
+  }
+
+  .cd-tabs-hint {
+    display: none;
+  }
+
+  .cd-career-pill {
+    padding: 0.65rem 0.85rem;
+  }
+
   .cd-toolbar {
     padding: 0.85rem;
     border-radius: 17px;
@@ -329,8 +426,8 @@
   }
 
   .cd-toolbar {
-    padding: 0.9rem;
-    border-radius: 14px;
+    padding: 0.85rem;
+    border-radius: 17px;
   }
 
   .cd-search-input-wrap {
@@ -338,7 +435,7 @@
   }
 
   .cd-career-pill {
-    padding: 0.55rem 0.9rem;
+    padding: 0.65rem 0.85rem;
   }
 }
 
@@ -506,21 +603,24 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: var(--cd-radius-md);
+  padding: 0.58rem 0.9rem;
+  border-radius: 13px;
   border: 1px solid var(--cd-card-border);
-  background: #ffffff;
-  color: var(--cd-text-muted);
+  background: rgba(255, 255, 255, 0.94);
+  color: #49617f;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--cd-transition);
+  box-shadow: 0 3px 9px rgba(22, 45, 78, 0.06);
 }
 
 .cd-icon-btn:hover {
-  background: #f1f5f9;
-  color: var(--cd-text-main);
-  border-color: #cbd5e1;
+  background: #ffffff;
+  color: #1d4ed8;
+  border-color: #a9c8f5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.12);
 }
 
 .cd-icon-btn.active {

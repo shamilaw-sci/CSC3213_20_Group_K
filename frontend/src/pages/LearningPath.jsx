@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import LearningPathCard from "../components/LearningPathCard";
 import RoadmapStep from "../components/RoadmapStep";
+import "./LearningPath.css";
 
 function LearningPath() {
   const steps = [
@@ -55,19 +56,22 @@ function LearningPath() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
+    <div className="min-h-screen bg-transparent py-10 px-4">
       <div className="max-w-5xl mx-auto">
 
         {/* Back navigation & Page Header */}
         <div className="mb-6">
           <Link
             to="/career"
-            className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition mb-4 group"
+            className="lp-back-link mb-4"
           >
-            <span className="mr-1 group-hover:-translate-x-1 transition-transform">
-              &larr;
+            <span className="lp-back-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5" />
+                <path d="m12 19-7-7 7-7" />
+              </svg>
             </span>
-            Back to Career Details
+            <span>Back to Career Details</span>
           </Link>
 
           <p className="text-blue-600 font-semibold text-sm uppercase tracking-wide">
@@ -119,9 +123,15 @@ function LearningPath() {
             </Link>
             <Link
               to="/career"
-              className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-5 py-2.5 rounded-lg transition text-sm border border-blue-500"
+              className="app-link-button"
             >
-              Career Overview
+              <span>Career Overview</span>
+              <span className="app-link-arrow" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="m13 6 6 6-6 6" />
+                </svg>
+              </span>
             </Link>
           </div>
         </div>

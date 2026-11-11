@@ -535,6 +535,14 @@ function CareerDetails() {
 
         {/* ── Interactive Filter & Career Selector ── */}
         <div className="cd-toolbar">
+          <div className="cd-selector-heading">
+            <div>
+              <span className="cd-selector-kicker">CAREER EXPLORER</span>
+              <h2>Find your next move</h2>
+            </div>
+            <span className="cd-role-count">{filteredCareerKeys.length} {filteredCareerKeys.length === 1 ? "role" : "roles"}</span>
+          </div>
+
           <div className="cd-filter-bar">
             {/* Category Chips */}
             <div className="cd-category-chips" role="group" aria-label="Career category filter">
@@ -569,6 +577,10 @@ function CareerDetails() {
           </div>
 
           {/* Career Pills List */}
+          <div className="cd-tabs-heading">
+            <span>Browse career paths</span>
+            <span className="cd-tabs-hint">Select a role to explore its outlook and skills</span>
+          </div>
           <div className="cd-career-pills" role="tablist" aria-label="Available careers">
             {filteredCareerKeys.length > 0 ? (
               filteredCareerKeys.map((key) => {
@@ -885,10 +897,15 @@ function CareerDetails() {
             <div className="cd-cta-actions">
               <Link
                 to="/learning-path"
-                className="cd-btn-primary"
+                className="app-link-button"
               >
                 <span>Start Learning Path</span>
-                <span aria-hidden="true">&rarr;</span>
+                <span className="app-link-arrow" aria-hidden="true">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </span>
               </Link>
 
               <Link
