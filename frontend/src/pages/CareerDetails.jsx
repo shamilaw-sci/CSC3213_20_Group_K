@@ -597,7 +597,13 @@ function CareerDetails() {
         <article className="cd-main-card">
 
           {/* Hero Banner inside Card */}
-          <div className="cd-hero-banner">
+          <div className="cd-hero-banner" data-career={currentCareer.title}>
+            <span
+              key={selectedCareer}
+              className="cd-hero-art"
+              data-career={currentCareer.title}
+              aria-hidden="true"
+            />
             <div className="cd-hero-top">
               <div className="cd-hero-profile">
                 <div className="cd-career-avatar" aria-hidden="true">

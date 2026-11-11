@@ -33,14 +33,17 @@
 /* Page Container */
 .cd-wrapper {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f0f4f9 0%, #f8fafc 100%);
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(191, 219, 254, 0.56), transparent 34rem),
+    radial-gradient(ellipse at 92% 16%, rgba(224, 231, 255, 0.5), transparent 32rem),
+    linear-gradient(180deg, #f6f8fc 0%, #f8fafc 100%);
   color: var(--cd-text-main);
   padding: 2.5rem 1rem 4rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .cd-container {
-  max-width: 1120px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -71,7 +74,7 @@
 }
 
 .cd-page-title {
-  font-size: 2.25rem;
+  font-size: clamp(2.1rem, 4vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--cd-text-main);
@@ -89,11 +92,15 @@
 
 /* Career Selector Toolbar */
 .cd-toolbar {
-  background: var(--cd-card-bg);
-  border: 1px solid var(--cd-card-border);
-  border-radius: var(--cd-radius-lg);
-  padding: 1.25rem;
-  box-shadow: var(--cd-shadow-sm);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(219, 234, 254, 0.72), transparent 36%),
+    linear-gradient(135deg, #ffffff 0%, #f8faff 58%, #f1f6ff 100%);
+  border: 1px solid #dbe5f2;
+  border-radius: 22px;
+  padding: 1.2rem;
+  box-shadow: 0 16px 40px rgba(31, 55, 90, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -105,36 +112,43 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  padding: 0 0 0.95rem;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.68);
 }
 
 .cd-category-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.45rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(241, 245, 249, 0.82);
+  border: 1px solid rgba(226, 232, 240, 0.85);
 }
 
 .cd-category-btn {
-  padding: 0.4rem 0.85rem;
+  padding: 0.48rem 0.95rem;
   font-size: 0.825rem;
   font-weight: 600;
   border-radius: 9999px;
-  border: 1px solid var(--cd-card-border);
-  background: var(--cd-bg);
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--cd-text-muted);
   cursor: pointer;
   transition: var(--cd-transition);
 }
 
 .cd-category-btn:hover {
-  background: #e2e8f0;
+  background: rgba(255, 255, 255, 0.9);
   color: var(--cd-text-main);
+  border-color: #e2e8f0;
 }
 
 .cd-category-btn.active {
-  background: var(--cd-text-main);
+  background: linear-gradient(135deg, #17243a, #263b59);
   color: #ffffff;
-  border-color: var(--cd-text-main);
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+  border-color: #17243a;
+  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .cd-search-input-wrap {
@@ -153,11 +167,11 @@
 
 .cd-search-input {
   width: 100%;
-  padding: 0.5rem 0.85rem 0.5rem 2.35rem;
+  padding: 0.65rem 0.9rem 0.65rem 2.35rem;
   font-size: 0.875rem;
   border: 1px solid var(--cd-card-border);
   border-radius: var(--cd-radius-md);
-  background: var(--cd-bg);
+  background: rgba(255, 255, 255, 0.78);
   color: var(--cd-text-main);
   outline: none;
   transition: var(--cd-transition);
@@ -172,9 +186,10 @@
 /* Career Selector Pills */
 .cd-career-pills {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.65rem;
   overflow-x: auto;
-  padding-bottom: 0.35rem;
+  padding: 0.85rem 0.1rem 0.35rem;
+  scroll-snap-type: x proximity;
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
@@ -192,9 +207,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.15rem;
-  background: var(--cd-bg);
-  border: 1.5px solid var(--cd-card-border);
+  padding: 0.68rem 1.05rem;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid #dbe4ef;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -203,20 +218,24 @@
   white-space: nowrap;
   transition: var(--cd-transition);
   user-select: none;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.025);
 }
 
 .cd-career-pill:hover {
   background: #ffffff;
-  border-color: #94a3b8;
+  border-color: #93b4e5;
   color: var(--cd-text-main);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(31, 72, 130, 0.09);
 }
 
 .cd-career-pill.active {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border-color: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8 72%, #244fc2);
+  border-color: #1d4ed8;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
 .cd-pill-icon {
@@ -225,15 +244,113 @@
   align-items: center;
 }
 
+@media (max-width: 640px) {
+  .cd-toolbar {
+    padding: 0.85rem;
+    border-radius: 17px;
+  }
+
+  .cd-filter-bar {
+    align-items: stretch;
+    padding-bottom: 0.75rem;
+  }
+
+  .cd-category-chips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    align-self: flex-start;
+    max-width: 100%;
+  }
+
+  .cd-category-btn {
+    white-space: nowrap;
+  }
+
+  .cd-search-input-wrap {
+    min-width: 100%;
+  }
+
+  .cd-career-pills {
+    padding-top: 0.7rem;
+  }
+}
+
 /* Main Career Details Card */
 .cd-main-card {
   background: var(--cd-card-bg);
   border: 1px solid var(--cd-card-border);
   border-radius: var(--cd-radius-xl);
-  box-shadow: var(--cd-shadow-lg);
+  box-shadow: 0 24px 70px -34px rgba(15, 23, 42, 0.32), 0 4px 14px rgba(15, 23, 42, 0.04);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+/* Small interaction and readability refinements for the career page. */
+.cd-wrapper button,
+.cd-wrapper a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cd-wrapper :is(button, a, input):focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.55);
+  outline-offset: 3px;
+}
+
+.cd-section-card,
+.cd-metric-card,
+.cd-toolbar {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.cd-section-card:hover,
+.cd-metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.cd-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.cd-category-btn:focus-visible,
+.cd-career-pill:focus-visible,
+.cd-icon-btn:focus-visible {
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .cd-wrapper {
+    padding: 1.25rem 0.75rem 2.5rem;
+  }
+
+  .cd-container {
+    gap: 1.1rem;
+  }
+
+  .cd-toolbar {
+    padding: 0.9rem;
+    border-radius: 14px;
+  }
+
+  .cd-search-input-wrap {
+    min-width: 100%;
+  }
+
+  .cd-career-pill {
+    padding: 0.55rem 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cd-wrapper *,
+  .cd-wrapper *::before,
+  .cd-wrapper *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 /* Hero Banner inside Card */
@@ -245,9 +362,66 @@
   flex-direction: column;
   gap: 1.5rem;
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.cd-hero-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 0 auto;
+  width: 46%;
+  background-image: url("../assets/career-banner-sprite.png");
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  background-position: 0% 0%;
+  --cd-art-opacity: 0.98;
+  opacity: var(--cd-art-opacity);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 42%);
+  transform-origin: 70% 50%;
+  will-change: opacity, transform, filter;
+  animation: cd-hero-art-transition 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cd-hero-art[data-career="Data Scientist"] { background-position: 33.333% 0%; }
+.cd-hero-art[data-career="Cybersecurity Analyst"] { background-position: 66.667% 0%; }
+.cd-hero-art[data-career="Cloud Engineer"] { background-position: 100% 0%; }
+.cd-hero-art[data-career="AI/ML Engineer"] { background-position: 0% 100%; }
+.cd-hero-art[data-career="Web Developer"] { background-position: 33.333% 100%; }
+.cd-hero-art[data-career="DevOps Engineer"] { background-position: 66.667% 100%; }
+.cd-hero-art[data-career="Database Administrator"] { background-position: 100% 100%; }
+
+@keyframes cd-hero-art-transition {
+  from {
+    opacity: 0;
+    filter: blur(7px);
+    transform: scale(1.045);
+  }
+  to {
+    opacity: var(--cd-art-opacity);
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .cd-hero-banner {
+    padding: 1.4rem 1rem 1.25rem;
+  }
+
+  .cd-hero-art {
+    width: 36%;
+    --cd-art-opacity: 0.24;
+    animation-duration: 520ms;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
+    mask-image: linear-gradient(90deg, transparent, #000 60%);
+  }
 }
 
 .cd-hero-top {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -356,11 +530,13 @@
 }
 
 .cd-career-desc {
+  position: relative;
+  z-index: 1;
   font-size: 1.05rem;
   line-height: 1.65;
   color: #334155;
   margin: 0;
-  max-width: 900px;
+  max-width: min(900px, 62%);
 }
 
 /* Metric Highlights Grid */
@@ -742,6 +918,10 @@
 
   .cd-hero-profile {
     flex-direction: column;
+  }
+
+  .cd-career-desc {
+    max-width: 100%;
   }
 
   .cd-career-heading {
