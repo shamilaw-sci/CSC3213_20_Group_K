@@ -4,6 +4,11 @@ import SkillList from "../components/SkillList";
 import MentorCard from "../components/MentorCard";
 import MentorProfileModal from "../components/MentorProfileModal";
 import MyBookingsModal from "../components/MyBookingsModal";
+import softwareEngineeringHero from "../assets/career-hero/software-engineering.jpg";
+import aiMlHero from "../assets/career-hero/ai-ml-engineer.jpg";
+import cloudEngineerHero from "../assets/career-hero/cloud-engineer.jpg";
+import cyberSecurityHero from "../assets/career-hero/cyber-security.jpg";
+import webDeveloperHero from "../assets/career-hero/web-developer.jpg";
 import {
   getMentorsByCareer,
   getMentorById,
@@ -71,13 +76,6 @@ const IconDatabase = ({ size = 18 }) => (
   </svg>
 );
 
-const IconBriefcase = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-  </svg>
-);
-
 const IconClipboardList = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
@@ -120,7 +118,7 @@ const getCareerIcon = (title, size = 18) => {
     case "Database Administrator":
       return <IconDatabase size={size} />;
     default:
-      return <IconBriefcase size={size} />;
+      return null;
   }
 };
 
@@ -457,8 +455,16 @@ const CAREERS_DATA = {
 };
 
 const CATEGORIES = ["All", "Software", "Data & AI", "Cloud & DevOps", "Security"];
+const CAREER_HERO_IMAGES = [
+  { src: softwareEngineeringHero, label: "Software engineering team" },
+  { src: aiMlHero, label: "AI and machine learning workspace" },
+  { src: cloudEngineerHero, label: "Cloud engineering team" },
+  { src: cyberSecurityHero, label: "Cybersecurity operations workspace" },
+  { src: webDeveloperHero, label: "Web development studio" },
+];
 
 function CareerDetails() {
+  const [heroSlide, setHeroSlide] = useState(0);
   const [selectedCareer, setSelectedCareer] = useState("Software Engineer");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -470,6 +476,17 @@ function CareerDetails() {
   const [isMyBookingsOpen, setIsMyBookingsOpen] = useState(false);
   const [mentorsList, setMentorsList] = useState([]);
   const [myBookingsCount, setMyBookingsCount] = useState(0);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return undefined;
+
+    const slideTimer = window.setInterval(() => {
+      setHeroSlide((current) => (current + 1) % CAREER_HERO_IMAGES.length);
+    }, 5000);
+
+    return () => window.clearInterval(slideTimer);
+  }, []);
 
   const refreshMentorsAndBookings = useCallback(() => {
     const list = getMentorsByCareer(selectedCareer);
@@ -517,12 +534,72 @@ function CareerDetails() {
 
   return (
     <div className="cd-wrapper">
+      <section className="cd-intro-hero" aria-label="Career guidance introduction">
+        <div className="cd-intro-slides" aria-hidden="true">
+          {CAREER_HERO_IMAGES.map((slide, index) => (
+            <img
+              key={slide.src}
+              className={`cd-intro-slide ${heroSlide === index ? "is-active" : ""}`}
+              src={slide.src}
+              alt=""
+              fetchPriority={index === 0 ? "high" : "auto"}
+            />
+          ))}
+        </div>
+        <div className="cd-intro-shade" aria-hidden="true" />
+        <div className="cd-intro-content">
+          <span className="cd-intro-eyebrow">CAREER GUIDANCE · FIND YOUR PATH</span>
+          <h1>Build a future<br /><em>that fits you.</em></h1>
+          <p>Explore technology careers, discover the skills employers value, and plan your next step with confidence.</p>
+          <div className="cd-intro-actions">
+            <a className="cd-intro-primary" href="#career-explorer">
+              <span>Explore careers</span>
+              <span className="app-link-arrow" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </span>
+            </a>
+            <Link className="cd-intro-secondary" to="/learning-path">
+              <span>View learning path</span>
+              <span className="app-link-arrow" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </span>
+            </Link>
+          </div>
+          <div className="cd-intro-pagination" role="group" aria-label="Career background images">
+            {CAREER_HERO_IMAGES.map((slide, index) => (
+              <button
+                key={slide.src}
+                type="button"
+                className={heroSlide === index ? "is-active" : ""}
+                aria-label={`Show image ${index + 1}: ${slide.label}`}
+                aria-pressed={heroSlide === index}
+                onClick={() => setHeroSlide(index)}
+              />
+            ))}
+          </div>
+        </div>
+        <span className="cd-intro-scroll-cue" aria-hidden="true">
+          SCROLL TO EXPLORE
+          <span className="cd-intro-scroll-arrow">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </span>
+        </span>
+      </section>
+
       <div className="cd-container">
 
         {/* ── Page Header ── */}
         <div className="cd-header-section">
           <div className="cd-badge-pill">
-            <IconBriefcase size={14} />
             <span>Career Intelligence Hub</span>
           </div>
 
@@ -534,7 +611,7 @@ function CareerDetails() {
         </div>
 
         {/* ── Interactive Filter & Career Selector ── */}
-        <div className="cd-toolbar">
+        <div className="cd-toolbar" id="career-explorer">
           <div className="cd-selector-heading">
             <div>
               <span className="cd-selector-kicker">CAREER EXPLORER</span>
@@ -711,7 +788,6 @@ function CareerDetails() {
 
             <div className="cd-metric-card">
               <div className="cd-metric-header">
-                <IconBriefcase size={14} />
                 <span>Experience Level</span>
               </div>
               <div className="cd-metric-val">{currentCareer.experienceLevel}</div>

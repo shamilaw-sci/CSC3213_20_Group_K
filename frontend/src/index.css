@@ -56,7 +56,8 @@ body {
   width: 2rem;
   height: 2rem;
   place-items: center;
-  border-radius: 11px;
+  flex: 0 0 2rem;
+  border-radius: 50%;
   background: #ffffff;
   color: #2563eb;
   font-size: 1rem;

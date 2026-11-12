@@ -33,15 +33,195 @@
 /* Page Container */
 .cd-wrapper {
   min-height: 100vh;
+  position: relative;
+  isolation: isolate;
   background: transparent;
   color: var(--cd-text-main);
-  padding: 2.5rem 1rem 4rem;
+  padding: 0 1rem 4rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-.cd-container {
-  max-width: 1200px;
+.cd-intro-hero {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  min-height: 620px;
+  height: 100svh;
+  margin: 0 -1rem;
+  overflow: hidden;
+  background: #102847;
+  color: #ffffff;
+}
+
+.cd-intro-slides,
+.cd-intro-shade {
+  position: absolute;
+  inset: 0;
+}
+
+.cd-intro-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  opacity: 0;
+  transform: scale(1.025);
+  transition: opacity 1200ms ease, transform 6500ms ease-out;
+}
+
+.cd-intro-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cd-intro-shade {
+  background:
+    linear-gradient(90deg, rgba(5, 20, 39, 0.82) 0%, rgba(8, 29, 56, 0.66) 44%, rgba(8, 29, 56, 0.22) 100%),
+    linear-gradient(0deg, rgba(5, 19, 37, 0.58), transparent 44%);
+}
+
+.cd-intro-content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1200px);
   margin: 0 auto;
+  padding: 0 2rem 4.5rem;
+}
+
+.cd-intro-eyebrow {
+  display: block;
+  margin-bottom: 1.4rem;
+  color: #c8dcff;
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.2em;
+}
+
+.cd-intro-content h1 {
+  max-width: 12ch;
+  margin: 0;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.4rem, 8vw, 7.5rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.cd-intro-content h1 em {
+  color: #c9ddff;
+  font-weight: 400;
+}
+
+.cd-intro-content > p {
+  max-width: 39rem;
+  margin: 1.3rem 0 1.8rem;
+  color: rgba(244, 248, 255, 0.9);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.cd-intro-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.cd-intro-primary,
+.cd-intro-secondary {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.cd-intro-primary {
+  background: #ffffff;
+  color: #1d4ed8;
+  box-shadow: 0 10px 26px rgba(3, 16, 34, 0.22);
+}
+
+.cd-intro-secondary {
+  background: rgba(12, 36, 66, 0.35);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+}
+
+.cd-intro-primary:hover,
+.cd-intro-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(3, 16, 34, 0.28);
+}
+
+.cd-intro-primary:hover { background: #eaf2ff; }
+.cd-intro-secondary:hover { background: rgba(255, 255, 255, 0.16); }
+
+.cd-intro-pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 2rem;
+}
+
+.cd-intro-pagination button {
+  width: 1.9rem;
+  height: 0.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  cursor: pointer;
+  transition: width 250ms ease, background 250ms ease;
+}
+
+.cd-intro-pagination button.is-active {
+  width: 3.1rem;
+  background: #ffffff;
+}
+
+.cd-intro-scroll-cue {
+  position: absolute;
+  z-index: 1;
+  right: max(2rem, calc((100vw - 1200px) / 2 + 2rem));
+  bottom: 7.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+}
+
+.cd-intro-scroll-arrow {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.cd-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0.75rem auto 0;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
@@ -52,7 +232,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  padding: 0.25rem 0 0.45rem;
+  padding: 1.65rem 1.85rem;
+  border: 1px solid rgba(222, 232, 245, 0.9);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 50px rgba(16, 40, 71, 0.13);
+  backdrop-filter: blur(14px);
 }
 
 .cd-badge-pill {
@@ -78,8 +263,9 @@
 
 .cd-page-title {
   font-size: clamp(2.4rem, 5vw, 3.65rem);
-  font-weight: 850;
-  letter-spacing: -0.055em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: -0.045em;
   color: var(--cd-text-main);
   line-height: 1.04;
   margin: 0;
@@ -317,6 +503,43 @@
 }
 
 @media (max-width: 640px) {
+  .cd-wrapper {
+    padding: 0 0.75rem 3rem;
+  }
+
+  .cd-intro-hero {
+    min-height: 600px;
+    height: 92svh;
+    margin-inline: -0.75rem;
+  }
+
+  .cd-intro-content {
+    padding: 0 1.25rem 3.5rem;
+  }
+
+  .cd-intro-content h1 {
+    font-size: clamp(3rem, 13vw, 5rem);
+  }
+
+  .cd-intro-content > p {
+    max-width: 31rem;
+    font-size: 1rem;
+  }
+
+  .cd-intro-scroll-cue {
+    display: none;
+  }
+
+  .cd-container {
+    margin-top: 0.5rem;
+    gap: 1.25rem;
+  }
+
+  .cd-header-section {
+    padding: 1.15rem;
+    border-radius: 18px;
+  }
+
   .cd-selector-heading h2 {
     font-size: 1.15rem;
   }
@@ -372,6 +595,14 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .cd-intro-slide,
+  .cd-intro-pagination button {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* Main Career Details Card */
 .cd-main-card {
   background: var(--cd-card-bg);
@@ -418,7 +649,7 @@
 
 @media (max-width: 640px) {
   .cd-wrapper {
-    padding: 1.25rem 0.75rem 2.5rem;
+    padding: 0 0.75rem 3rem;
   }
 
   .cd-container {
@@ -452,9 +683,10 @@
 
 /* Hero Banner inside Card */
 .cd-hero-banner {
-  padding: 2.25rem 2.25rem 2rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #edf2f9 100%);
-  border-bottom: 1px solid var(--cd-card-border);
+  min-height: 350px;
+  padding: 2.6rem 2.5rem 2.25rem;
+  background: linear-gradient(125deg, #102847 0%, #163d70 58%, #1e4e85 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -467,18 +699,19 @@
   position: absolute;
   z-index: 0;
   inset: 0 0 0 auto;
-  width: 46%;
+  width: 52%;
   background-image: url("../assets/career-banner-sprite.png");
   background-repeat: no-repeat;
   background-size: 400% 200%;
   background-position: 0% 0%;
-  --cd-art-opacity: 0.98;
+  --cd-art-opacity: 0.82;
   opacity: var(--cd-art-opacity);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 42%);
+  filter: saturate(0.88);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
   transform-origin: 70% 50%;
   will-change: opacity, transform, filter;
-  animation: cd-hero-art-transition 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: cd-hero-art-transition 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .cd-hero-art[data-career="Data Scientist"] { background-position: 33.333% 0%; }
@@ -492,27 +725,28 @@
 @keyframes cd-hero-art-transition {
   from {
     opacity: 0;
-    filter: blur(7px);
+    filter: blur(7px) saturate(0.88);
     transform: scale(1.045);
   }
   to {
     opacity: var(--cd-art-opacity);
-    filter: blur(0);
+    filter: blur(0) saturate(0.88);
     transform: scale(1);
   }
 }
 
 @media (max-width: 640px) {
   .cd-hero-banner {
-    padding: 1.4rem 1rem 1.25rem;
+    min-height: 0;
+    padding: 1.5rem 1rem 1.35rem;
   }
 
   .cd-hero-art {
-    width: 36%;
-    --cd-art-opacity: 0.24;
-    animation-duration: 520ms;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
-    mask-image: linear-gradient(90deg, transparent, #000 60%);
+    width: 44%;
+    --cd-art-opacity: 0.38;
+    animation-duration: 1.5s;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 50%);
+    mask-image: linear-gradient(90deg, transparent, #000 50%);
   }
 }
 
@@ -586,11 +820,37 @@
 }
 
 .cd-career-heading {
-  font-size: 2.1rem;
-  font-weight: 800;
-  color: var(--cd-text-main);
-  letter-spacing: -0.03em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3.7vw, 3.1rem);
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
   margin: 0;
+}
+
+.cd-hero-meta .text-blue-600 {
+  color: #c8dcff !important;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.cd-tag-primary {
+  background: rgba(191, 219, 254, 0.16);
+  color: #e6f0ff;
+  border-color: rgba(191, 219, 254, 0.34);
+}
+
+.cd-tag-success {
+  background: rgba(167, 243, 208, 0.15);
+  color: #c9f5df;
+  border-color: rgba(167, 243, 208, 0.3);
+}
+
+.cd-tag-neutral {
+  background: rgba(255, 255, 255, 0.14);
+  color: #e4edfa;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .cd-hero-actions {
@@ -634,9 +894,9 @@
   z-index: 1;
   font-size: 1.05rem;
   line-height: 1.65;
-  color: #334155;
+  color: rgba(241, 246, 255, 0.9);
   margin: 0;
-  max-width: min(900px, 62%);
+  max-width: min(880px, 60%);
 }
 
 /* Metric Highlights Grid */
@@ -998,7 +1258,7 @@
 
 @media (max-width: 640px) {
   .cd-wrapper {
-    padding: 1.5rem 0.75rem 3rem;
+    padding: 0 0.75rem 3rem;
   }
 
   .cd-page-title {
@@ -1025,7 +1285,7 @@
   }
 
   .cd-career-heading {
-    font-size: 1.65rem;
+    font-size: 2rem;
   }
 
   .cd-cta-actions {
