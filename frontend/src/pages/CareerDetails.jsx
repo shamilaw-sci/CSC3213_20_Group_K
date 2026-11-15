@@ -65,30 +65,35 @@ function CareerDetails() {
   const CareerIcon = CAREER_ICONS[selected] || Briefcase;
 
   return (
-    <div className="page-shell">
+    <div className="page-shell cd-shell">
       <Navbar />
 
       <div className="main-content cd-page">
         <div className="cd-inner">
 
-          {/* Page Header */}
           <div className="page-header">
             <div className="page-kicker">
               <Briefcase size={13} strokeWidth={2} aria-hidden="true" />
               Career Explorer
             </div>
-            <h1>Career Details</h1>
-            <p>Select a career to explore salary ranges, required skills, and future scope.</p>
+            <h1>Explore career paths</h1>
+            <p>Compare career profiles, salary ranges, required skills, and future scope.</p>
           </div>
 
-          {/* Career Selector */}
           <div className="cd-selector-wrap">
+            <div className="cd-selector-heading">
+              <div>
+                <h2>Choose a career</h2>
+                <p>Select a path to view its career profile.</p>
+              </div>
+            </div>
             <div className="cd-selector-grid" role="tablist" aria-label="Select a career track">
               {CAREERS.map((c) => {
                 const CIcon = CAREER_ICONS[c] || Briefcase;
                 return (
                   <button
                     key={c}
+                    type="button"
                     role="tab"
                     aria-selected={selected === c}
                     className={`cd-selector-btn ${selected === c ? "active" : ""}`}
@@ -102,7 +107,6 @@ function CareerDetails() {
             </div>
           </div>
 
-          {/* Loading */}
           {loading && (
             <div className="cd-loading" aria-live="polite">
               <div className="spinner spinner-lg" />
@@ -110,55 +114,47 @@ function CareerDetails() {
             </div>
           )}
 
-          {/* Error */}
           {error && (
             <div className="alert alert-error" role="alert">{error}</div>
           )}
 
-          {/* Career Content */}
           {!loading && !error && career && (
-            <div className="cd-content" role="tabpanel" aria-label={`${selected} career details`}>
+            <div
+              className="cd-content"
+              id="career-details-panel"
+              role="tabpanel"
+              aria-label={`${selected} career details`}
+            >
 
-              {/* Title banner */}
               <div className="cd-title-card">
                 <div className="cd-title-icon" aria-hidden="true">
                   <CareerIcon size={26} strokeWidth={1.8} />
                 </div>
-                <div>
+                <div className="cd-title-copy">
+                  <span className="cd-title-eyebrow">Career profile</span>
                   <h2 className="cd-career-name">{career.title}</h2>
                   <p className="cd-description">{career.description}</p>
                 </div>
               </div>
 
-              {/* Info Grid */}
               <div className="cd-info-grid">
-
-                {/* Salary */}
-                <div className="cd-card">
+                <section className="cd-card cd-salary-card">
                   <div className="cd-card-header">
                     <BarChart3 size={16} strokeWidth={1.8} aria-hidden="true" />
                     <h3>Salary Range</h3>
                   </div>
                   <div className="cd-salary-value">{career.salaryRange}</div>
-                  <div className="cd-salary-tiers">
-                    <div className="cd-tier"><span className="cd-tier-dot cd-tier-dot--entry" aria-hidden="true" />Entry Level</div>
-                    <div className="cd-tier"><span className="cd-tier-dot cd-tier-dot--mid"   aria-hidden="true" />Mid Level</div>
-                    <div className="cd-tier"><span className="cd-tier-dot cd-tier-dot--senior" aria-hidden="true" />Senior Level</div>
-                  </div>
-                </div>
+                </section>
 
-                {/* Future Scope */}
-                <div className="cd-card">
+                <section className="cd-card cd-scope-card">
                   <div className="cd-card-header">
                     <TrendingUp size={16} strokeWidth={1.8} aria-hidden="true" />
                     <h3>Future Scope</h3>
                   </div>
                   <p className="cd-scope-text">{career.futureScope}</p>
-                  <div className="cd-scope-badge">High Growth Potential</div>
-                </div>
+                </section>
 
-                {/* Skills */}
-                <div className="cd-card">
+                <section className="cd-card cd-skills-card">
                   <div className="cd-card-header">
                     <Code2 size={16} strokeWidth={1.8} aria-hidden="true" />
                     <h3>Required Skills</h3>
@@ -168,10 +164,9 @@ function CareerDetails() {
                       <span className="skill-chip" key={skill}>{skill}</span>
                     ))}
                   </div>
-                </div>
+                </section>
 
-                {/* Quick Overview */}
-                <div className="cd-card">
+                <section className="cd-card cd-overview-card">
                   <div className="cd-card-header">
                     <Briefcase size={16} strokeWidth={1.8} aria-hidden="true" />
                     <h3>Quick Overview</h3>
@@ -192,12 +187,11 @@ function CareerDetails() {
                       <span className="cd-ov-value">{career.salaryRange}</span>
                     </li>
                     <li>
-                      <span>Demand Level</span>
-                      <span className="cd-ov-value cd-ov-high">High</span>
+                      <span>Future Scope</span>
+                      <span className="cd-ov-value">{career.futureScope}</span>
                     </li>
                   </ul>
-                </div>
-
+                </section>
               </div>
             </div>
           )}

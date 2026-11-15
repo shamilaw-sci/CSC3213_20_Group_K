@@ -56,7 +56,7 @@ function AdminNavbar() {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="mobile-topbar" aria-label="Admin navigation bar">
+      <div className="mobile-topbar mobile-topbar--admin" aria-label="Admin navigation bar">
         <Link to="/admin" className="nav-brand">
           <div className="nav-logo-mark" aria-hidden="true">
             <Shield size={16} strokeWidth={2} />
@@ -64,7 +64,7 @@ function AdminNavbar() {
           <span className="nav-brand-text">Admin Panel</span>
         </Link>
         <button
-          className="mobile-menu-btn"
+          className="mobile-menu-btn mobile-menu-btn--admin"
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
@@ -78,7 +78,7 @@ function AdminNavbar() {
       {/* Mobile overlay */}
       {open && (
         <div
-          className="sidebar-overlay"
+          className="sidebar-overlay sidebar-overlay--admin"
           aria-hidden="true"
           onClick={() => setOpen(false)}
         />

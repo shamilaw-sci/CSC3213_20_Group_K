@@ -26,6 +26,12 @@ const toItems = (value) => {
   return [];
 };
 
+const toScore = (value) => {
+  if (value === null || value === undefined || (typeof value === "string" && !value.trim())) return null;
+  const score = Number(value);
+  return Number.isFinite(score) ? Math.round(score) : null;
+};
+
 function ResumeAnalyzer() {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
@@ -110,7 +116,7 @@ function ResumeAnalyzer() {
   };
 
   return (
-    <div className="resume-page">
+    <div className="resume-page resume-analyzer-theme">
       <Navbar />
       <main className="resume-main">
         <section className="resume-hero">
@@ -172,10 +178,10 @@ function ResumeAnalyzer() {
         {analysis && !loading && (
           <section className="resume-results">
             <div className="resume-score-card">
-              <div className="resume-score-ring" style={{ "--score": `${Math.min(Math.max(Number(analysis.atsScore) || 0, 0), 100)}%` }}>
-                <div><strong>{Math.round(Number(analysis.atsScore) || 0)}</strong><span>ATS Score</span></div>
+              <div className="resume-score-ring" style={{ "--score": `${Math.min(Math.max(toScore(analysis.atsScore) ?? 0, 0), 100)}%` }}>
+                <div><strong>{toScore(analysis.atsScore) ?? "—"}</strong><span>ATS Score</span></div>
               </div>
-              <div><span className="resume-eyebrow">YOUR RESUME REPORT</span><h2>Ready for a stronger application?</h2><p>{analysis.summary || "Use these focused recommendations to make your resume clearer, more relevant, and more competitive."}</p></div>
+              <div><span className="resume-eyebrow">YOUR RESUME REPORT</span><h2>Ready for a stronger application?</h2>{analysis.summary && <p>{analysis.summary}</p>}</div>
               <button type="button" onClick={() => { setAnalysis(null); setFile(null); }}>Analyze another resume</button>
             </div>
 

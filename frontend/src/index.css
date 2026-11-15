@@ -23,8 +23,8 @@
 
   /* Sidebar */
   --sidebar-width:        256px;
-  --sidebar-bg:           #ffffff;
-  --sidebar-border:       #e2e8f0;
+  --sidebar-bg:           #071629;
+  --sidebar-border:       rgba(145, 188, 225, .14);
 
   /* Typography */
   --color-text:           #162033;

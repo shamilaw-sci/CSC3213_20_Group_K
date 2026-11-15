@@ -187,7 +187,7 @@ function CvAnalysisManagement() {
   const detailStudent = analysisDetails?.userId || selectedAnalysis?.userId;
 
   return (
-    <div className="page-shell">
+    <div className="page-shell admin-theme">
       <AdminNavbar />
       <main className="main-content adm-page cvam-page">
         <div className="adm-page-header">

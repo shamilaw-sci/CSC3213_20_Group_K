@@ -332,3 +332,99 @@
     scroll-margin-top: calc(56px + var(--space-4));
   }
 }
+
+.admin-theme .cm-form {
+  gap: 18px;
+}
+
+.admin-theme .cm-form label,
+.admin-theme .cm-page-size,
+.admin-theme .cm-result-count,
+.admin-theme .cm-pagination {
+  color: #a9bad1;
+}
+
+.admin-theme .cm-form input,
+.admin-theme .cm-form textarea,
+.admin-theme .cm-search,
+.admin-theme .cm-page-size select {
+  border-color: rgba(143, 194, 242, .22);
+  border-radius: 11px;
+  color: #e2edfb;
+  background: rgba(4, 15, 32, .62);
+}
+
+.admin-theme .cm-form input,
+.admin-theme .cm-form textarea {
+  padding: 11px 13px;
+}
+
+.admin-theme .cm-form input::placeholder,
+.admin-theme .cm-form textarea::placeholder,
+.admin-theme .cm-search input::placeholder {
+  color: #7188a6;
+}
+
+.admin-theme .cm-form input:focus,
+.admin-theme .cm-form textarea:focus,
+.admin-theme .cm-search:focus-within {
+  border-color: rgba(120, 232, 251, .58);
+  box-shadow: 0 0 0 3px rgba(58, 191, 220, .1);
+}
+
+.admin-theme .cm-form-section .adm-section-header,
+.admin-theme .cm-toolbar,
+.admin-theme .cm-pagination {
+  border-color: rgba(143, 194, 242, .12);
+}
+
+.admin-theme .cm-search input {
+  color: #e2edfb;
+}
+
+.admin-theme .cm-description-preview {
+  color: #9dafc8;
+}
+
+.admin-theme .cm-feedback--success {
+  border-color: rgba(90, 218, 175, .28);
+  color: #9ce8ca;
+  background: rgba(23, 124, 92, .16);
+}
+
+.admin-theme .cm-feedback--error {
+  border-color: rgba(255, 116, 128, .3);
+  color: #ffc0c7;
+  background: rgba(148, 34, 49, .15);
+}
+
+.admin-theme .cm-modal-backdrop {
+  background: rgba(2, 8, 18, .78);
+  backdrop-filter: blur(7px);
+}
+
+.admin-theme .cm-modal {
+  border-color: rgba(139, 192, 235, .2);
+  background: #0c1930;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .55);
+}
+
+.admin-theme .cm-modal-header {
+  border-color: rgba(143, 194, 242, .14);
+  background: rgba(11, 25, 48, .97);
+}
+
+.admin-theme .cm-modal-header h2,
+.admin-theme .cm-detail-item h3 {
+  color: #eff6ff;
+}
+
+.admin-theme .cm-detail-item {
+  border-color: rgba(143, 194, 242, .16);
+  background: rgba(15, 34, 62, .68);
+}
+
+.admin-theme .cm-detail-item p,
+.admin-theme .cm-detail-item ul {
+  color: #a9bad1;
+}

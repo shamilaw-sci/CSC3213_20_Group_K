@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Brain } from "lucide-react";
+import {
+  ArrowRight,
+  BrainCircuit,
+  LockKeyhole,
+  Mail,
+  UserRound,
+} from "lucide-react";
 import "./Auth.css";
 
 function Register() {
@@ -36,12 +42,19 @@ function Register() {
 
   return (
     <div className="auth-page">
-      {/* Left panel */}
       <div className="auth-left">
+        <img
+          className="auth-background-image"
+          src="/images/ai-career-assistant.jpg.png"
+          alt="A student exploring career guidance with an AI assistant"
+          fetchPriority="high"
+        />
+        <div className="auth-image-overlay" aria-hidden="true" />
         <div className="auth-left-content">
           <span className="auth-logo" aria-hidden="true">
-            <Brain size={26} strokeWidth={2} />
+            <BrainCircuit size={25} strokeWidth={1.8} />
           </span>
+          <span className="auth-kicker">Your future, with direction</span>
           <h1>AI Career Guidance System</h1>
           <p>
             Join students building smarter career strategies with the power
@@ -53,13 +66,20 @@ function Register() {
             <li>Tailored learning roadmaps</li>
             <li>Real industry insights</li>
           </ul>
+          <div className="auth-image-caption">
+            <span className="auth-caption-indicator" aria-hidden="true" />
+            <span>Personalized guidance for your next step</span>
+          </div>
         </div>
       </div>
 
-      {/* Right panel */}
-      <div className="auth-right">
+      <main className="auth-right">
         <div className="auth-card">
+          <div className="auth-card-mark" aria-hidden="true">
+            <BrainCircuit size={19} />
+          </div>
           <div className="auth-card-header">
+            <span className="auth-form-eyebrow">Create your Career Intelligence account</span>
             <h2>Create your account</h2>
             <p>Start your AI-powered career journey today</p>
           </div>
@@ -70,46 +90,56 @@ function Register() {
           <form onSubmit={registerUser} className="auth-form">
             <div className="form-group">
               <label htmlFor="name">Full name</label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                autoComplete="name"
-              />
+              <div className="auth-input-wrap">
+                <UserRound size={17} aria-hidden="true" />
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  autoComplete="name"
+                />
+              </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="email">Email address</label>
-              <input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-              />
+              <div className="auth-input-wrap">
+                <Mail size={17} aria-hidden="true" />
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                />
+              </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Minimum 6 characters"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                autoComplete="new-password"
-              />
+              <div className="auth-input-wrap">
+                <LockKeyhole size={17} aria-hidden="true" />
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Minimum 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  autoComplete="new-password"
+                />
+              </div>
             </div>
 
             <button type="submit" className="auth-btn" disabled={loading}>
-              {loading ? "Creating account…" : "Create account"}
+              <span>{loading ? "Creating account…" : "Create account"}</span>
+              {!loading && <ArrowRight size={17} aria-hidden="true" />}
             </button>
           </form>
 
@@ -118,7 +148,7 @@ function Register() {
             <Link to="/login">Sign in here</Link>
           </p>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

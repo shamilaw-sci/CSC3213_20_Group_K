@@ -344,3 +344,100 @@
     align-items: flex-start;
   }
 }
+
+.admin-theme .rh-toolbar,
+.admin-theme .rh-pagination {
+  border-color: rgba(143, 194, 242, .12);
+}
+
+.admin-theme .rh-search,
+.admin-theme .rh-page-size select {
+  border-color: rgba(143, 194, 242, .22);
+  color: #a7bad4;
+  background: rgba(4, 15, 32, .62);
+}
+
+.admin-theme .rh-search:focus-within {
+  border-color: rgba(120, 232, 251, .58);
+  box-shadow: 0 0 0 3px rgba(58, 191, 220, .1);
+}
+
+.admin-theme .rh-search input,
+.admin-theme .rh-page-size,
+.admin-theme .rh-pagination {
+  color: #a9bad1;
+}
+
+.admin-theme .rh-search input::placeholder {
+  color: #7188a6;
+}
+
+.admin-theme .rh-student {
+  color: #dce9f8;
+}
+
+.admin-theme .rh-date,
+.admin-theme .rh-result-count,
+.admin-theme .rh-career-meta {
+  color: #9dafc8;
+}
+
+.admin-theme .rh-career-meta strong {
+  color: #dbe8f8;
+}
+
+.admin-theme .rh-careers-cell {
+  color: #bdd0e8;
+}
+
+.admin-theme .rh-score {
+  border: 1px solid rgba(184, 159, 255, .26);
+  color: #d6c9ff;
+  background: rgba(108, 80, 190, .2);
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-theme .rh-feedback--error {
+  border-color: rgba(255, 116, 128, .3);
+  color: #ffc0c7;
+  background: rgba(148, 34, 49, .15);
+}
+
+.admin-theme .rh-modal-backdrop {
+  background: rgba(2, 8, 18, .78);
+  backdrop-filter: blur(7px);
+}
+
+.admin-theme .rh-modal {
+  border-color: rgba(139, 192, 235, .2);
+  background: #0c1930;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .55);
+}
+
+.admin-theme .rh-modal-header {
+  border-color: rgba(143, 194, 242, .14);
+  background: rgba(11, 25, 48, .97);
+}
+
+.admin-theme .rh-modal-header h2,
+.admin-theme .rh-career-header h3,
+.admin-theme .rh-detail-section h4 {
+  color: #eff6ff;
+}
+
+.admin-theme .rh-report-meta > div,
+.admin-theme .rh-career-report,
+.admin-theme .rh-detail-section {
+  border-color: rgba(143, 194, 242, .16);
+  background: rgba(15, 34, 62, .68);
+}
+
+.admin-theme .rh-report-meta span,
+.admin-theme .rh-detail-section p,
+.admin-theme .rh-detail-section ul {
+  color: #9dafc8;
+}
+
+.admin-theme .rh-report-meta strong {
+  color: #dbe8f8;
+}

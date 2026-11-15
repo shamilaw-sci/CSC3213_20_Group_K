@@ -295,3 +295,89 @@
     justify-content: space-between;
   }
 }
+
+.admin-theme .cvam-toolbar,
+.admin-theme .cvam-pagination {
+  border-color: rgba(143, 194, 242, .12);
+}
+
+.admin-theme .cvam-search,
+.admin-theme .cvam-page-size select {
+  border-color: rgba(143, 194, 242, .22);
+  color: #a7bad4;
+  background: rgba(4, 15, 32, .62);
+}
+
+.admin-theme .cvam-search:focus-within {
+  border-color: rgba(120, 232, 251, .58);
+  box-shadow: 0 0 0 3px rgba(58, 191, 220, .1);
+}
+
+.admin-theme .cvam-search input,
+.admin-theme .cvam-page-size,
+.admin-theme .cvam-pagination {
+  color: #a9bad1;
+}
+
+.admin-theme .cvam-search input::placeholder {
+  color: #7188a6;
+}
+
+.admin-theme .cvam-student {
+  color: #dce9f8;
+}
+
+.admin-theme .cvam-date,
+.admin-theme .cvam-result-count {
+  color: #9dafc8;
+}
+
+.admin-theme .cvam-score {
+  border: 1px solid rgba(120, 232, 251, .26);
+  color: #9cecf6;
+  background: linear-gradient(120deg, rgba(33, 135, 174, .23), rgba(67, 87, 181, .2));
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-theme .cvam-feedback--error {
+  border-color: rgba(255, 116, 128, .3);
+  color: #ffc0c7;
+  background: rgba(148, 34, 49, .15);
+}
+
+.admin-theme .cvam-modal-backdrop {
+  background: rgba(2, 8, 18, .78);
+  backdrop-filter: blur(7px);
+}
+
+.admin-theme .cvam-modal {
+  border-color: rgba(139, 192, 235, .2);
+  background: #0c1930;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .55);
+}
+
+.admin-theme .cvam-modal-header {
+  border-color: rgba(143, 194, 242, .14);
+  background: rgba(11, 25, 48, .97);
+}
+
+.admin-theme .cvam-modal-header h2,
+.admin-theme .cvam-report-section h3 {
+  color: #eff6ff;
+}
+
+.admin-theme .cvam-report-meta > div,
+.admin-theme .cvam-report-section {
+  border-color: rgba(143, 194, 242, .16);
+  background: rgba(15, 34, 62, .68);
+}
+
+.admin-theme .cvam-report-meta span,
+.admin-theme .cvam-report-section p,
+.admin-theme .cvam-report-section ul {
+  color: #9dafc8;
+}
+
+.admin-theme .cvam-report-meta strong {
+  color: #dbe8f8;
+}

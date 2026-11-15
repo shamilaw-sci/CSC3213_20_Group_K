@@ -78,7 +78,7 @@ function AdminDashboard() {
     : [];
 
   return (
-    <div className="page-shell">
+    <div className="page-shell admin-theme">
       <AdminNavbar />
       <div className="main-content adm-page">
         {/* Page header */}

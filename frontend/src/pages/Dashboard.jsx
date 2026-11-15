@@ -127,7 +127,7 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="page-shell">
+      <div className="page-shell db-shell">
         <Navbar />
         <div className="main-content db-page">
           <div className="db-inner">
@@ -145,7 +145,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="page-shell">
+    <div className="page-shell db-shell">
       <Navbar />
 
       <div className="main-content db-page">

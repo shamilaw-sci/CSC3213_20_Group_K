@@ -268,7 +268,7 @@ function CareerManagement() {
   const lastCareer = Math.min(pagination.page * pageSize, totalCareers);
 
   return (
-    <div className="page-shell">
+    <div className="page-shell admin-theme">
       <AdminNavbar />
       <main className="main-content adm-page cm-page">
         <div className="adm-page-header">

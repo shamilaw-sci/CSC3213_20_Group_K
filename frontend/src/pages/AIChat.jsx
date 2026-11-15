@@ -119,7 +119,7 @@ function AIChat() {
   };
 
   return (
-    <div className="ai-chat-page">
+    <div className="ai-chat-page ai-chat-theme">
       <Navbar />
 
       <main className="ai-chat-main">

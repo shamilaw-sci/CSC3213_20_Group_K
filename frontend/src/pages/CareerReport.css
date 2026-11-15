@@ -1,0 +1,377 @@
+.career-report-theme {
+  min-height: 100vh;
+  color: #e8f1ff;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(25, 92, 190, .23), transparent 25%),
+    radial-gradient(circle at 88% 28%, rgba(13, 203, 215, .1), transparent 22%),
+    #07101f;
+}
+
+.career-report-theme .main-content {
+  background: transparent !important;
+}
+
+.career-report-theme .career-report-main {
+  min-width: 0;
+  padding: 0;
+}
+
+.career-report-theme .career-report-inner {
+  width: min(1120px, calc(100% - 48px));
+  flex: 1;
+  margin: 0 auto;
+  padding: 40px 0 56px;
+}
+
+.career-report-theme .career-report-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 27px;
+  padding: 27px 30px;
+  border: 1px solid rgba(147, 194, 255, .18);
+  border-radius: 21px;
+  background: linear-gradient(120deg, rgba(25, 60, 127, .64), rgba(14, 27, 55, .7));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+}
+
+.career-report-theme .career-report-header h1 {
+  margin: 9px 0 7px;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  letter-spacing: -.04em;
+}
+
+.career-report-theme .career-report-header p {
+  max-width: 650px;
+  margin: 0;
+  color: #b9c9e4;
+}
+
+.career-report-theme .career-report-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #78e8fb;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.career-report-theme .career-report-history-button,
+.career-report-theme .career-report-retry {
+  display: inline-flex;
+  min-height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid rgba(106, 230, 249, .35);
+  border-radius: 11px;
+  color: #d7faff;
+  background: rgba(25, 92, 150, .4);
+  font-size: .86rem;
+  font-weight: 800;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.career-report-theme .career-report-history-button:hover,
+.career-report-theme .career-report-retry:hover {
+  transform: translateY(-1px);
+  border-color: #78e8fb;
+  box-shadow: 0 8px 22px rgba(18, 124, 197, .2);
+}
+
+.career-report-theme .career-report-loading,
+.career-report-theme .career-report-empty {
+  display: flex;
+  min-height: 330px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 34px;
+  border: 1px solid rgba(142, 188, 234, .17);
+  border-radius: 20px;
+  background: rgba(14, 28, 54, .75);
+  text-align: center;
+}
+
+.career-report-theme .career-report-orb {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  margin-bottom: 16px;
+  border: 1px solid rgba(105, 232, 253, .28);
+  border-radius: 20px;
+  color: #7eeeff;
+  background: rgba(24, 172, 196, .12);
+  box-shadow: 0 0 34px rgba(66, 221, 247, .12);
+}
+
+.career-report-theme .career-report-loading .career-report-orb {
+  animation: report-pulse 1.8s ease-in-out infinite;
+}
+
+.career-report-theme .career-report-loading h2,
+.career-report-theme .career-report-empty h2 {
+  margin: 0 0 8px;
+  color: #f4f8ff;
+  font-size: 1.3rem;
+}
+
+.career-report-theme .career-report-loading p,
+.career-report-theme .career-report-empty p {
+  margin: 0;
+  color: #aebed6;
+}
+
+.career-report-theme .career-report-empty .btn-primary {
+  margin-top: 21px;
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(110deg, #167dbd, #276dca);
+}
+
+.career-report-theme .career-report-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 119, 119, .35);
+  border-radius: 15px;
+  color: #ffc1c1;
+  background: rgba(167, 34, 48, .2);
+}
+
+.career-report-theme .career-report-error h2 {
+  margin: 0 0 4px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.career-report-theme .career-report-error p {
+  margin: 0;
+  color: #e2bfc5;
+  font-size: .9rem;
+}
+
+.career-report-theme .career-report-retry {
+  color: #fff;
+  background: linear-gradient(110deg, #167dbd, #276dca);
+}
+
+.career-report-theme .career-report-score-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 20px;
+  padding: clamp(21px, 3vw, 31px);
+  border: 1px solid rgba(146, 205, 255, .22);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(18, 64, 123, .65), rgba(15, 28, 55, .82));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .2);
+}
+
+.career-report-theme .career-report-score-ring {
+  display: grid;
+  width: 136px;
+  height: 136px;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#66e6f7 var(--score), rgba(156, 190, 230, .15) 0);
+  box-shadow: 0 0 32px rgba(64, 216, 240, .1);
+}
+
+.career-report-theme .career-report-score-ring > div {
+  display: flex;
+  width: 110px;
+  height: 110px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(125, 174, 226, .12);
+  border-radius: 50%;
+  background: #0d1d38;
+}
+
+.career-report-theme .career-report-score-ring strong {
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.career-report-theme .career-report-score-ring span {
+  color: #a4b7d2;
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.career-report-theme .career-report-eyebrow {
+  color: #78e8fb;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.career-report-theme .career-report-summary h2 {
+  margin: 7px 0;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.career-report-theme .career-report-summary p {
+  max-width: 760px;
+  margin: 0 0 10px;
+  color: #b5c4da;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.career-report-theme .career-report-summary small {
+  color: #91a4c1;
+  font-size: .78rem;
+}
+
+.career-report-theme .career-report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.career-report-theme .career-report-section {
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid rgba(142, 188, 234, .17);
+  border-radius: 17px;
+  background: rgba(14, 28, 54, .75);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .14);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.career-report-theme .career-report-section:hover {
+  transform: translateY(-2px);
+  border-color: rgba(112, 223, 249, .4);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .22);
+}
+
+.career-report-theme .career-report-section-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  margin-bottom: 14px;
+  border: 1px solid rgba(105, 232, 253, .25);
+  border-radius: 11px;
+  color: #7eeeff;
+  background: rgba(24, 172, 196, .12);
+}
+
+.career-report-theme .career-report-section h2 {
+  margin: 0 0 14px;
+  color: #f4f8ff;
+  font-size: 1rem;
+}
+
+.career-report-theme .career-report-section ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.career-report-theme .career-report-section li {
+  color: #b5c6dd;
+  font-size: .88rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.career-report-theme .career-report-section li::before {
+  margin-right: 8px;
+  color: #73e8fa;
+  content: "•";
+}
+
+.career-report-theme .career-report-section > p {
+  margin: 0;
+  color: #91a4c1;
+  font-size: .88rem;
+}
+
+.career-report-theme button:focus-visible {
+  outline: 2px solid #78e8fb;
+  outline-offset: 3px;
+}
+
+@keyframes report-pulse {
+  50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(66, 221, 247, .22); }
+}
+
+@media (max-width: 1023px) {
+  .career-report-theme .career-report-inner {
+    padding-top: 80px;
+  }
+}
+
+@media (max-width: 760px) {
+  .career-report-theme .career-report-inner {
+    width: min(100% - 32px, 620px);
+    padding-bottom: 48px;
+  }
+
+  .career-report-theme .career-report-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .career-report-theme .career-report-score-card {
+    gap: 20px;
+  }
+
+  .career-report-theme .career-report-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .career-report-theme .career-report-inner {
+    width: calc(100% - 24px);
+    padding-top: 70px;
+  }
+
+  .career-report-theme .career-report-score-card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .career-report-theme .career-report-summary {
+    width: 100%;
+  }
+
+  .career-report-theme .career-report-error {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .career-report-theme .career-report-retry,
+  .career-report-theme .career-report-history-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-report-theme .career-report-loading .career-report-orb {
+    animation: none;
+  }
+}

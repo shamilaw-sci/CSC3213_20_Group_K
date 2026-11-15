@@ -7,15 +7,15 @@ import { AlertCircle, BrainCircuit, RefreshCw } from "lucide-react";
 import { IconChart, IconBriefcase, IconBook, IconBrain } from "../components/icons/Icons";
 import "./AIRecommendation.css";
 
-const CAREER_META = {
-  "Data Scientist": { icon: <IconChart />, category: "Data & Analytics" },
-  "Software Engineer": { icon: <IconBriefcase />, category: "Technology" },
-  "Web Developer": { icon: <IconBook />, category: "Technology" },
-  "AI/ML Engineer": { icon: <IconBrain />, category: "Artificial Intelligence" },
-  "Cybersecurity Analyst": { icon: <IconBriefcase />, category: "Cybersecurity" },
-  "Cloud Engineer": { icon: <IconBriefcase />, category: "Cloud Computing" },
-  "DevOps Engineer": { icon: <IconBriefcase />, category: "Technology" },
-  "Database Administrator": { icon: <IconChart />, category: "Data & Analytics" },
+const CAREER_ICONS = {
+  "Data Scientist": <IconChart />,
+  "Software Engineer": <IconBriefcase />,
+  "Web Developer": <IconBook />,
+  "AI/ML Engineer": <IconBrain />,
+  "Cybersecurity Analyst": <IconBriefcase />,
+  "Cloud Engineer": <IconBriefcase />,
+  "DevOps Engineer": <IconBriefcase />,
+  "Database Administrator": <IconChart />,
 };
 
 const getMatchTier = (match) => {
@@ -24,8 +24,22 @@ const getMatchTier = (match) => {
   return "emerging";
 };
 
+const getMatchPercentage = (value) => {
+  if (
+    value === null ||
+    value === undefined ||
+    (typeof value === "string" && value.trim() === "")
+  ) return null;
+  const percentage = Number(value);
+  return Number.isFinite(percentage) && percentage >= 0 && percentage <= 100
+    ? percentage
+    : null;
+};
+
+const hasText = (value) => typeof value === "string" && value.trim().length > 0;
+
 const getCareerMeta = (career) =>
-  CAREER_META[career] || { icon: <IconBriefcase />, category: "Career Path" };
+  CAREER_ICONS[career] || <IconBriefcase />;
 
 function CircularProgress({ percentage }) {
   const radius = 42;
@@ -33,8 +47,8 @@ function CircularProgress({ percentage }) {
   const offset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="ai-circular-progress" aria-label={`${percentage}% career match`}>
-      <svg viewBox="0 0 100 100" role="img">
+    <div className="ai-circular-progress" role="img" aria-label={`${percentage}% career match`}>
+      <svg viewBox="0 0 100 100" aria-hidden="true">
         <circle className="ai-progress-track" cx="50" cy="50" r={radius} />
         <circle
           className="ai-progress-value"
@@ -105,7 +119,12 @@ function AIRecommendation() {
   }, [fetchRecommendations]);
 
   const highestMatch = useMemo(
-    () => Math.max(0, ...recommendations.map((item) => Number(item.matchPercentage) || 0)),
+    () => {
+      const scores = recommendations
+        .map((item) => getMatchPercentage(item.matchPercentage))
+        .filter((score) => score !== null);
+      return scores.length ? Math.max(...scores) : null;
+    },
     [recommendations]
   );
 
@@ -120,14 +139,14 @@ function AIRecommendation() {
   };
 
   return (
-    <div className="ai-page-wrapper">
+    <div className="ai-page-wrapper ai-recommendation-theme">
       <Navbar />
 
       <main className="ai-page-main">
         <section className="ai-hero">
           <span className="ai-hero-badge"><IconBrain /> Gemini-powered career guidance</span>
-          <h1><BrainCircuit aria-hidden="true" /> AI Career Recommendation</h1>
-          <p>Personalised career insights tailored to your skills, interests, and potential.</p>
+          <h1><BrainCircuit aria-hidden="true" /> AI Career Recommendations</h1>
+          <p>Explore career matches and insights based on your profile and AI analysis.</p>
           <button
             className="ai-generate-again-button"
             type="button"
@@ -184,21 +203,49 @@ function AIRecommendation() {
                 <strong>{recommendations.length}</strong>
                 <span>Careers recommended</span>
               </div>
-              <div className="ai-summary-stat">
-                <strong>{highestMatch}%</strong>
-                <span>Highest match</span>
-              </div>
+              {highestMatch !== null && (
+                <div className="ai-summary-stat">
+                  <strong>{highestMatch}%</strong>
+                  <span>Highest match</span>
+                </div>
+              )}
               <div className="ai-summary-status">✓ Profile analysed successfully</div>
             </section>
 
             <section className="ai-recommendation-grid" aria-label="Career recommendations">
               {recommendations.map((recommendation, index) => {
-                const percentage = Math.min(Math.max(Number(recommendation.matchPercentage) || 0, 0), 100);
-                const tier = getMatchTier(percentage);
-                const meta = getCareerMeta(recommendation.career);
-                const isExpanded = expandedCards[index];
-                const certifications = recommendation.recommendedCertifications || recommendation.certifications || [];
-                const projects = recommendation.suggestedPortfolioProjects || recommendation.portfolioProjects || [];
+                const percentage = getMatchPercentage(recommendation.matchPercentage);
+                const tier = percentage === null ? "unscored" : getMatchTier(percentage);
+                const careerIcon = getCareerMeta(recommendation.career);
+                const isExpanded = Boolean(expandedCards[index]);
+                const salaryRange = recommendation.estimatedSalaryRange || recommendation.salaryRange;
+                const missingSkills = Array.isArray(recommendation.missingSkills)
+                  ? recommendation.missingSkills
+                  : [];
+                const roadmap = Array.isArray(recommendation.suggestedLearningRoadmap)
+                  ? recommendation.suggestedLearningRoadmap
+                  : [];
+                const advantages = Array.isArray(recommendation.advantages) ? recommendation.advantages : [];
+                const challenges = Array.isArray(recommendation.challenges) ? recommendation.challenges : [];
+                const certifications = Array.isArray(recommendation.recommendedCertifications)
+                  ? recommendation.recommendedCertifications
+                  : Array.isArray(recommendation.certifications)
+                    ? recommendation.certifications
+                    : [];
+                const projects = Array.isArray(recommendation.suggestedPortfolioProjects)
+                  ? recommendation.suggestedPortfolioProjects
+                  : Array.isArray(recommendation.portfolioProjects)
+                    ? recommendation.portfolioProjects
+                    : [];
+                const hasAdditionalAnalysis = [
+                  recommendation.detailedExplanation,
+                  recommendation.careerGrowth,
+                  recommendation.industryOutlook,
+                ].some(hasText) ||
+                  advantages.length > 0 ||
+                  challenges.length > 0 ||
+                  certifications.length > 0 ||
+                  projects.length > 0;
 
                 return (
                   <article
@@ -208,66 +255,83 @@ function AIRecommendation() {
                   >
                     <header className="ai-card-header">
                       <div className="ai-career-identity">
-                        <div className="ai-career-icon">{meta.icon}</div>
+                        <div className="ai-career-icon" aria-hidden="true">{careerIcon}</div>
                         <div>
-                          <span className="ai-category-badge">{recommendation.category || meta.category}</span>
+                          {hasText(recommendation.category) && (
+                            <span className="ai-category-badge">{recommendation.category}</span>
+                          )}
                           <h2>{recommendation.career}</h2>
                         </div>
                       </div>
-                      <CircularProgress percentage={percentage} />
+                      {percentage !== null && <CircularProgress percentage={percentage} />}
                     </header>
 
-                    <div className="ai-card-overview">
-                      <section>
-                        <h3>Why this is a match</h3>
-                        <p>{recommendation.reason || "This career aligns with your current profile and learning potential."}</p>
-                      </section>
-                      <div className="ai-insight-grid">
-                        <div><span>Estimated salary</span><strong>{recommendation.estimatedSalaryRange || recommendation.salaryRange || "Not available"}</strong></div>
-                        <div><span>Future demand</span><strong>{recommendation.futureDemand || "High potential"}</strong></div>
-                      </div>
-                    </div>
-
-                    <div className="ai-detail-grid">
-                      <section>
-                        <h3>Skills to develop</h3>
-                        {recommendation.missingSkills?.length ? (
-                          <div className="ai-skill-list">
-                            {recommendation.missingSkills.map((skill, skillIndex) => <span key={`${skill}-${skillIndex}`}>{skill}</span>)}
+                    {(hasText(recommendation.reason) || salaryRange || hasText(recommendation.futureDemand)) && (
+                      <div className="ai-card-overview">
+                        {hasText(recommendation.reason) && (
+                          <section>
+                            <h3>Why this is a match</h3>
+                            <p>{recommendation.reason}</p>
+                          </section>
+                        )}
+                        {(salaryRange || hasText(recommendation.futureDemand)) && (
+                          <div className="ai-insight-grid">
+                            {salaryRange && <div><span>Estimated salary</span><strong>{salaryRange}</strong></div>}
+                            {hasText(recommendation.futureDemand) && <div><span>Future demand</span><strong>{recommendation.futureDemand}</strong></div>}
                           </div>
-                        ) : <p className="ai-muted">Your profile is well aligned with this role.</p>}
-                      </section>
-                      <section>
-                        <h3>Learning roadmap</h3>
-                        {recommendation.suggestedLearningRoadmap?.length ? (
-                          <ol className="ai-roadmap-list">
-                            {recommendation.suggestedLearningRoadmap.map((step, stepIndex) => <li key={`${step}-${stepIndex}`}>{step}</li>)}
-                          </ol>
-                        ) : <p className="ai-muted">A roadmap will be available soon.</p>}
-                      </section>
-                    </div>
+                        )}
+                      </div>
+                    )}
 
-                    <button className="ai-analysis-toggle" onClick={() => toggleAnalysis(index)} aria-expanded={isExpanded}>
+                    {(missingSkills.length > 0 || roadmap.length > 0) && (
+                      <div className="ai-detail-grid">
+                        {missingSkills.length > 0 && (
+                          <section>
+                            <h3>Skills to develop</h3>
+                            <div className="ai-skill-list">
+                              {missingSkills.map((skill, skillIndex) => <span key={`${skill}-${skillIndex}`}>{skill}</span>)}
+                            </div>
+                          </section>
+                        )}
+                        {roadmap.length > 0 && (
+                          <section>
+                            <h3>Learning roadmap</h3>
+                            <ol className="ai-roadmap-list">
+                              {roadmap.map((step, stepIndex) => <li key={`${step}-${stepIndex}`}>{step}</li>)}
+                            </ol>
+                          </section>
+                        )}
+                      </div>
+                    )}
+
+                    <button
+                      className="ai-analysis-toggle"
+                      type="button"
+                      onClick={() => toggleAnalysis(index)}
+                      aria-expanded={isExpanded}
+                      aria-controls={`ai-analysis-${index}`}
+                    >
                       {isExpanded ? "Hide Full AI Analysis" : "Show Full AI Analysis"}
                       <span>{isExpanded ? "−" : "+"}</span>
                     </button>
 
-                    {isExpanded && (
-                      <div className="ai-expanded-analysis">
-                        <section><h3>Detailed explanation</h3><p>{recommendation.detailedExplanation || recommendation.reason || "AI analysis is based on the strengths and opportunities identified in your profile."}</p></section>
-                        <section><h3>Career growth</h3><p>{recommendation.careerGrowth || "Develop specialist expertise and build practical experience to progress into advanced roles."}</p></section>
-                        <section><h3>Industry outlook</h3><p>{recommendation.industryOutlook || "This field continues to evolve, creating opportunities for professionals who keep their skills current."}</p></section>
-                        <section><h3>Advantages</h3><ul>{(recommendation.advantages || ["Opportunities to build in-demand skills", "Strong potential for professional growth"]).map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul></section>
-                        <section><h3>Challenges</h3><ul>{(recommendation.challenges || ["Requires consistent learning", "A practical portfolio is important for standing out"]).map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul></section>
-                        <section><h3>Recommended certifications</h3>{certifications.length ? <ul>{certifications.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul> : <p>Explore recognised certifications relevant to this career path.</p>}</section>
-                        <section><h3>Suggested portfolio projects</h3>{projects.length ? <ul>{projects.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul> : <p>Build practical projects that demonstrate the key skills for this role.</p>}</section>
-                      </div>
-                    )}
+                    <div className="ai-expanded-analysis" id={`ai-analysis-${index}`} hidden={!isExpanded}>
+                      {hasText(recommendation.detailedExplanation) && <section><h3>Detailed explanation</h3><p>{recommendation.detailedExplanation}</p></section>}
+                      {hasText(recommendation.careerGrowth) && <section><h3>Career growth</h3><p>{recommendation.careerGrowth}</p></section>}
+                      {hasText(recommendation.industryOutlook) && <section><h3>Industry outlook</h3><p>{recommendation.industryOutlook}</p></section>}
+                      {advantages.length > 0 && <section><h3>Advantages</h3><ul>{advantages.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul></section>}
+                      {challenges.length > 0 && <section><h3>Challenges</h3><ul>{challenges.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul></section>}
+                      {certifications.length > 0 && <section><h3>Recommended certifications</h3><ul>{certifications.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul></section>}
+                      {projects.length > 0 && <section><h3>Suggested portfolio projects</h3><ul>{projects.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul></section>}
+                      {!hasAdditionalAnalysis && (
+                        <p className="ai-muted">No additional analysis was provided for this recommendation.</p>
+                      )}
+                    </div>
 
                     <footer className="ai-card-actions">
-                      <button className="ai-primary-button" onClick={() => navigate("/learning-path")}>View Learning Path</button>
-                      <button className="ai-secondary-button" onClick={() => navigate("/career-details")}>Explore Career Details</button>
-                      <button className="ai-chat-button" onClick={() => openAiChat(recommendation.career)}>Ask AI About This Career</button>
+                      <button className="ai-primary-button" type="button" onClick={() => navigate("/learning-path")}>View Learning Path</button>
+                      <button className="ai-secondary-button" type="button" onClick={() => navigate("/career-details")}>Explore Career Details</button>
+                      <button className="ai-chat-button" type="button" onClick={() => openAiChat(recommendation.career)}>Ask AI About This Career</button>
                     </footer>
                   </article>
                 );

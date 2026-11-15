@@ -354,3 +354,107 @@
     grid-column: auto;
   }
 }
+
+.admin-theme .um-toolbar,
+.admin-theme .um-pagination {
+  border-color: rgba(143, 194, 242, .12);
+}
+
+.admin-theme .um-search,
+.admin-theme .um-select-label select {
+  border-color: rgba(143, 194, 242, .22);
+  color: #a7bad4;
+  background: rgba(4, 15, 32, .62);
+}
+
+.admin-theme .um-search:focus-within {
+  border-color: rgba(120, 232, 251, .58);
+  box-shadow: 0 0 0 3px rgba(58, 191, 220, .1);
+}
+
+.admin-theme .um-search input,
+.admin-theme .um-select-label,
+.admin-theme .um-pagination {
+  color: #a9bad1;
+}
+
+.admin-theme .um-search input::placeholder {
+  color: #7188a6;
+}
+
+.admin-theme .um-name-cell,
+.admin-theme .um-result-count,
+.admin-theme .um-pagination strong,
+.admin-theme .um-row-actions {
+  color: #d3e2f5;
+}
+
+.admin-theme .um-name-cell svg {
+  color: #7dddec;
+}
+
+.admin-theme .um-feedback--success {
+  border-color: rgba(90, 218, 175, .28);
+  color: #9ce8ca;
+  background: rgba(23, 124, 92, .16);
+}
+
+.admin-theme .um-feedback--error {
+  border-color: rgba(255, 116, 128, .3);
+  color: #ffc0c7;
+  background: rgba(148, 34, 49, .15);
+}
+
+.admin-theme .um-empty-state {
+  color: #9aacc5;
+}
+
+.admin-theme .um-modal-backdrop {
+  background: rgba(2, 8, 18, .78);
+  backdrop-filter: blur(7px);
+}
+
+.admin-theme .um-modal {
+  border-color: rgba(139, 192, 235, .2);
+  background: #0c1930;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .55);
+}
+
+.admin-theme .um-modal-header {
+  border-color: rgba(143, 194, 242, .14);
+  background: rgba(11, 25, 48, .97);
+}
+
+.admin-theme .um-modal-header h2 {
+  color: #eff6ff;
+}
+
+.admin-theme .um-detail-grid > div,
+.admin-theme .um-history-card {
+  border-color: rgba(143, 194, 242, .16);
+  background: rgba(15, 34, 62, .68);
+}
+
+.admin-theme .um-detail-grid dt,
+.admin-theme .um-history-heading time,
+.admin-theme .um-history-heading span,
+.admin-theme .um-history-card p,
+.admin-theme .um-history-empty,
+.admin-theme .um-history-note {
+  color: #9dafc8;
+}
+
+.admin-theme .um-detail-grid dd,
+.admin-theme .um-history-heading,
+.admin-theme .um-history-card b {
+  color: #dbe8f8;
+}
+
+.admin-theme .um-history-card {
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.admin-theme .um-history-card:hover {
+  border-color: rgba(120, 232, 251, .3);
+  background: rgba(18, 42, 72, .82);
+}

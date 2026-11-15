@@ -12,11 +12,14 @@ import {
   Briefcase,
   Lightbulb,
   CalendarDays,
+  FileSearch,
+  History,
   RefreshCw,
 } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import "./CareerReport.css";
 
 const REPORT_SECTIONS = [
   { title: "Strengths", key: "strengths", icon: CheckCircle },
@@ -30,6 +33,12 @@ const REPORT_SECTIONS = [
   { title: "Interview Preparation", key: "interviewPreparation", icon: Target },
   { title: "30-Day Learning Plan", key: "next30DaysPlan", icon: CalendarDays },
 ];
+
+const toScore = (value) => {
+  if (value === null || value === undefined || (typeof value === "string" && !value.trim())) return null;
+  const score = Number(value);
+  return Number.isFinite(score) ? Math.round(score) : null;
+};
 
 function CareerReport() {
   const [report, setReport] = useState(null);
@@ -81,29 +90,45 @@ function CareerReport() {
   }, [fetchReport]);
 
   return (
-    <div className="page-shell">
+    <div className="page-shell career-report-theme">
       <Navbar />
 
-      <main className="main-content" style={{ padding: "32px" }}>
-        <div style={{ maxWidth: "1100px", margin: "auto" }}>
-          <header style={{ marginBottom: "32px" }}>
-            <h1>Career Report</h1>
-            <p>Your personalized career insights based on your latest resume analysis.</p>
+      <main className="main-content career-report-main">
+        <div className="career-report-inner">
+          <header className="career-report-header">
+            <div>
+              <span className="career-report-kicker"><FileText size={14} aria-hidden="true" /> Resume intelligence</span>
+              <h1>Career Report</h1>
+              <p>Your personalized career insights based on your latest resume analysis.</p>
+            </div>
+            <button className="career-report-history-button" type="button" onClick={() => navigate("/resume-history")}>
+              <History size={16} aria-hidden="true" /> Analysis history
+            </button>
           </header>
 
-          {loading && <p>Loading your career report...</p>}
+          {loading && (
+            <section className="career-report-loading" aria-live="polite">
+              <div className="career-report-orb"><FileSearch size={30} aria-hidden="true" /></div>
+              <h2>Loading your career report</h2>
+              <p>Retrieving your latest saved resume analysis.</p>
+            </section>
+          )}
 
           {error && (
-            <div role="alert">
-              {error}
-              <button onClick={fetchReport}>
-                <RefreshCw size={16} /> Retry
+            <div className="career-report-error" role="alert">
+              <div>
+                <h2>We couldn’t load your report</h2>
+                <p>{error}</p>
+              </div>
+              <button className="career-report-retry" type="button" onClick={fetchReport}>
+                <RefreshCw size={16} aria-hidden="true" /> Retry
               </button>
             </div>
           )}
 
           {!loading && !error && !report && (
-            <section className="card" style={{ padding: "32px" }}>
+            <section className="career-report-empty">
+              <div className="career-report-orb"><FileSearch size={30} aria-hidden="true" /></div>
               <h2>No career report available</h2>
               <p>Analyze your resume to generate your personalized career report.</p>
               <button
@@ -117,35 +142,38 @@ function CareerReport() {
 
           {!loading && report && (
             <>
-              <section className="card" style={{ padding: "28px", marginBottom: "24px" }}>
-                <p>YOUR LATEST ATS SCORE</p>
-                <h2 style={{ fontSize: "48px", margin: "8px 0" }}>
-                  {Math.round(Number(report.atsScore) || 0)}%
-                </h2>
-                <p>{report.summary || "Your personalized career analysis."}</p>
-                <small>
-                  Generated: {report.createdAt
-                    ? new Date(report.createdAt).toLocaleDateString()
-                    : "Date unavailable"}
-                </small>
+              <section className="career-report-score-card">
+                <div
+                  className="career-report-score-ring"
+                  style={{ "--score": `${Math.min(Math.max(toScore(report.atsScore) ?? 0, 0), 100)}%` }}
+                >
+                  <div>
+                    <strong>{toScore(report.atsScore) === null ? "—" : toScore(report.atsScore)}</strong>
+                    <span>ATS score</span>
+                  </div>
+                </div>
+                <div className="career-report-summary">
+                  <span className="career-report-eyebrow">YOUR LATEST ATS SCORE</span>
+                  <h2>Resume analysis overview</h2>
+                  {report.summary && <p>{report.summary}</p>}
+                  <small>
+                    Generated: {report.createdAt
+                      ? new Date(report.createdAt).toLocaleDateString()
+                      : "Date unavailable"}
+                  </small>
+                </div>
               </section>
 
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                gap: "20px"
-              }}>
+              <div className="career-report-grid">
                 {REPORT_SECTIONS.map(({ title, key, icon: Icon }) => {
                   const items = Array.isArray(report[key])
                     ? report[key]
                     : [];
 
                   return (
-                    <section className="card" key={key} style={{ padding: "24px" }}>
-                      <h2 style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                        <Icon size={20} />
-                        {title}
-                      </h2>
+                    <section className="career-report-section" key={key}>
+                      <div className="career-report-section-icon"><Icon size={19} aria-hidden="true" /></div>
+                      <h2>{title}</h2>
 
                       {items.length > 0 ? (
                         <ul>
@@ -163,9 +191,8 @@ function CareerReport() {
             </>
           )}
         </div>
+        <Footer />
       </main>
-
-      <Footer />
     </div>
   );
 }

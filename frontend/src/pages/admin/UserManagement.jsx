@@ -219,7 +219,7 @@ function UserManagement() {
   const currentUser = userDetails?.user || selectedUser;
 
   return (
-    <div className="page-shell">
+    <div className="page-shell admin-theme">
       <AdminNavbar />
       <main className="main-content adm-page um-page">
         <div className="adm-page-header">

@@ -208,7 +208,7 @@ function RecommendationHistory() {
     : [];
 
   return (
-    <div className="page-shell">
+    <div className="page-shell admin-theme">
       <AdminNavbar />
       <main className="main-content adm-page rh-page">
         <div className="adm-page-header">

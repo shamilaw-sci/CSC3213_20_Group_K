@@ -166,3 +166,337 @@
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* Admin theme */
+.admin-theme {
+  min-height: 100vh;
+  color: #e8f1ff;
+  background:
+    radial-gradient(circle at 12% 6%, rgba(32, 99, 197, .2), transparent 25%),
+    radial-gradient(circle at 88% 24%, rgba(12, 190, 211, .09), transparent 23%),
+    #07101f;
+}
+
+.admin-theme .main-content.adm-page {
+  width: auto;
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: var(--sidebar-width);
+  padding: 34px clamp(18px, 3.4vw, 48px) 56px;
+  color: #e8f1ff;
+  background: transparent !important;
+}
+
+.admin-theme .adm-page-header {
+  position: relative;
+  margin: 0 0 22px;
+  padding: 26px 30px;
+  overflow: hidden;
+  border: 1px solid rgba(147, 194, 255, .18);
+  border-radius: 20px;
+  background: linear-gradient(120deg, rgba(23, 58, 121, .72), rgba(11, 25, 50, .83));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .2);
+}
+
+.admin-theme .adm-page-header::after {
+  position: absolute;
+  top: -90px;
+  right: 7%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(31, 191, 219, .1);
+  content: "";
+  filter: blur(35px);
+  pointer-events: none;
+}
+
+.admin-theme .adm-page-kicker,
+.admin-theme .adm-page-title,
+.admin-theme .adm-page-sub {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-theme .adm-page-kicker {
+  color: #78e8fb;
+}
+
+.admin-theme .adm-page-title {
+  margin: 4px 0 7px;
+  color: #f7faff;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  letter-spacing: -.035em;
+}
+
+.admin-theme .adm-page-sub {
+  color: #b6c8e2;
+}
+
+.admin-theme .adm-stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.admin-theme .adm-stat-card {
+  position: relative;
+  min-width: 0;
+  padding: 19px;
+  overflow: hidden;
+  border: 1px solid rgba(142, 188, 234, .16);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(14, 31, 59, .92), rgba(9, 21, 42, .94));
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .18);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.admin-theme .adm-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(112, 223, 249, .38);
+  box-shadow: 0 19px 42px rgba(0, 0, 0, .25);
+}
+
+.admin-theme .adm-stat-icon {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(112, 223, 249, .18);
+  border-radius: 13px;
+  color: #80e8f5;
+  background: rgba(24, 172, 196, .12);
+}
+
+.admin-theme .adm-stat-icon--purple,
+.admin-theme .adm-stat-icon--indigo {
+  color: #b5b4ff;
+  background: rgba(102, 91, 214, .18);
+}
+
+.admin-theme .adm-stat-icon--green {
+  color: #75e5c4;
+  background: rgba(40, 176, 132, .15);
+}
+
+.admin-theme .adm-stat-icon--orange {
+  color: #ffcb82;
+  background: rgba(211, 132, 51, .16);
+}
+
+.admin-theme .adm-stat-value {
+  color: #f4f8ff;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.admin-theme .adm-stat-label {
+  color: #9fb1cc;
+  font-size: .82rem;
+}
+
+.admin-theme .adm-section {
+  margin-bottom: 18px;
+  border: 1px solid rgba(142, 188, 234, .16);
+  border-radius: 18px;
+  background: rgba(11, 23, 46, .83);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .19);
+}
+
+.admin-theme .adm-section-header {
+  min-height: 60px;
+  padding: 14px 19px;
+  border-bottom-color: rgba(143, 194, 242, .13);
+}
+
+.admin-theme .adm-section-title {
+  color: #eef5ff;
+  font-size: .98rem;
+  font-weight: 750;
+}
+
+.admin-theme .adm-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.admin-theme .adm-table {
+  min-width: 680px;
+  color: #c4d2e6;
+  font-size: .84rem;
+}
+
+.admin-theme .adm-table th,
+.admin-theme .adm-table td {
+  padding: 12px 17px;
+  border-bottom-color: rgba(143, 194, 242, .1);
+}
+
+.admin-theme .adm-table th {
+  color: #8fa9c8;
+  background: rgba(5, 16, 33, .65);
+  font-size: .68rem;
+  letter-spacing: .07em;
+}
+
+.admin-theme .adm-table tbody tr {
+  background: transparent;
+  transition: background .16s ease;
+}
+
+.admin-theme .adm-table tbody tr:hover {
+  background: rgba(42, 105, 154, .12);
+}
+
+.admin-theme .adm-table td {
+  color: #c4d2e6;
+}
+
+.admin-theme .adm-empty-state {
+  color: #91a5c1 !important;
+}
+
+.admin-theme .adm-badge {
+  padding: 4px 9px;
+  border: 1px solid rgba(120, 232, 251, .18);
+  color: #9cecf6;
+  background: rgba(37, 152, 187, .13);
+  font-size: .68rem;
+  letter-spacing: .04em;
+}
+
+.admin-theme .adm-badge--admin {
+  border-color: rgba(177, 154, 255, .25);
+  color: #d3c7ff;
+  background: rgba(111, 77, 198, .18);
+}
+
+.admin-theme .adm-badge--user {
+  border-color: rgba(120, 232, 251, .18);
+  color: #9cecf6;
+  background: rgba(37, 152, 187, .13);
+}
+
+.admin-theme .adm-loading,
+.admin-theme .adm-error {
+  color: #aabbd4;
+}
+
+.admin-theme .adm-loading .spinner,
+.admin-theme .spinner {
+  border-color: rgba(130, 177, 221, .2);
+  border-top-color: #67e6f5;
+}
+
+.admin-theme .adm-error,
+.admin-theme .adm-error p {
+  color: #ffc4cb;
+}
+
+.admin-theme .adm-actions-row {
+  gap: 11px;
+}
+
+.admin-theme .btn {
+  border-color: rgba(143, 184, 225, .2);
+  color: #c6d6eb;
+  background: rgba(7, 19, 39, .58);
+  transition: transform .18s ease, border-color .18s ease, color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.admin-theme .btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(120, 232, 251, .48);
+  color: #eefaff;
+  background: rgba(23, 62, 98, .72);
+}
+
+.admin-theme .btn.btn-primary {
+  border-color: rgba(105, 224, 245, .45);
+  color: #061323;
+  background: linear-gradient(115deg, #71e7f7, #80cfff);
+  font-weight: 800;
+}
+
+.admin-theme .btn.btn-primary:hover:not(:disabled) {
+  border-color: #9af4ff;
+  color: #061323;
+  background: linear-gradient(115deg, #8beefa, #9ad9ff);
+  box-shadow: 0 7px 20px rgba(59, 206, 232, .2);
+}
+
+.admin-theme .btn.btn-danger,
+.admin-theme .um-delete-button,
+.admin-theme .cm-delete-button {
+  border-color: rgba(255, 116, 128, .35);
+  color: #ffb8c0;
+  background: rgba(161, 35, 49, .15);
+}
+
+.admin-theme .btn:disabled {
+  opacity: .48;
+}
+
+.admin-theme button:focus-visible,
+.admin-theme a:focus-visible,
+.admin-theme select:focus-visible,
+.admin-theme input:focus-visible,
+.admin-theme textarea:focus-visible {
+  outline: 2px solid #78e8fb;
+  outline-offset: 3px;
+}
+
+.admin-theme .app-footer {
+  margin-top: auto;
+  border-top-color: rgba(143, 194, 242, .11);
+  color: #849ab8;
+  background: transparent;
+}
+
+.admin-theme .app-footer-name,
+.admin-theme .app-footer-copy {
+  color: #849ab8;
+}
+
+.admin-theme .app-footer-links a {
+  color: #9cb0ca;
+}
+
+.admin-theme .app-footer-links a:hover {
+  color: #78e8fb;
+}
+
+@media (max-width: 1023px) {
+  .admin-theme .main-content.adm-page {
+    margin-left: 0;
+    padding-top: 78px;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-theme .main-content.adm-page {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .admin-theme .adm-page-header {
+    padding: 22px 19px;
+  }
+
+  .admin-theme .adm-section-header {
+    align-items: flex-start;
+  }
+
+  .admin-theme .adm-actions-row {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-theme *,
+  .admin-theme *::before,
+  .admin-theme *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}

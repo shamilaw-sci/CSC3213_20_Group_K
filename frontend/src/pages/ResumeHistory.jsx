@@ -10,6 +10,12 @@ const formatDate = (value) => value
   ? new Intl.DateTimeFormat([], { day: "numeric", month: "short", year: "numeric" }).format(new Date(value))
   : "Unknown date";
 
+const toScore = (value) => {
+  if (value === null || value === undefined || (typeof value === "string" && !value.trim())) return null;
+  const score = Number(value);
+  return Number.isFinite(score) ? Math.round(score) : null;
+};
+
 function ResumeHistory() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,14 +51,21 @@ function ResumeHistory() {
   }, [navigate]);
 
   return (
-    <div className="page-shell">
+    <div className="page-shell resume-history-theme">
       <Navbar />
       <main className="main-content history-page">
         <div className="history-inner">
-          <header className="page-header">
-            <div className="page-kicker"><History size={13} aria-hidden="true" /> Resume intelligence</div>
-            <h1>Resume history</h1>
-            <p>Review every analysis and keep track of how your application is improving.</p>
+          <header className="history-header">
+            <div>
+              <div className="page-kicker"><History size={13} aria-hidden="true" /> Resume intelligence</div>
+              <h1>Resume history</h1>
+              <p>Review every analysis and keep track of how your application is improving.</p>
+            </div>
+            {!loading && !error && history.length > 0 && (
+              <button className="history-report-button" type="button" onClick={() => navigate("/career-report")}>
+                View latest report <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            )}
           </header>
 
           {error && <div className="alert alert-error" role="alert">{error}</div>}
@@ -81,7 +94,7 @@ function ResumeHistory() {
                     <div className="history-row-title"><h2>{item.fileName || "Resume analysis"}</h2><span className="badge badge-primary">Analysis {history.length - index}</span></div>
                     <p><CalendarDays size={14} aria-hidden="true" /> {formatDate(item.createdAt)}</p>
                   </div>
-                  <div className="history-score"><strong>{Math.round(Number(item.atsScore) || 0)}%</strong><span>ATS score</span></div>
+                  <div className="history-score"><strong>{toScore(item.atsScore) === null ? "—" : `${toScore(item.atsScore)}%`}</strong><span>ATS score</span></div>
                   <div className="history-career"><span>Career signal</span><strong>{item.careerMatches?.[0] || item.career || "Not yet identified"}</strong></div>
                   <ShieldCheck className="history-trust" size={17} aria-label="Saved securely" />
                 </article>
