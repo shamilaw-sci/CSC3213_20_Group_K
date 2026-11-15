@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import SkillList from "../components/SkillList";
 import MentorCard from "../components/MentorCard";
@@ -496,7 +496,7 @@ function CareerDetails() {
   }, [selectedCareer]);
 
   useEffect(() => {
-    refreshMentorsAndBookings();
+    const initialRefresh = window.setTimeout(refreshMentorsAndBookings, 0);
 
     const handleSync = () => {
       refreshMentorsAndBookings();
@@ -504,6 +504,7 @@ function CareerDetails() {
 
     window.addEventListener(BOOKING_UPDATE_EVENT, handleSync);
     return () => {
+      window.clearTimeout(initialRefresh);
       window.removeEventListener(BOOKING_UPDATE_EVENT, handleSync);
     };
   }, [selectedCareer, refreshMentorsAndBookings]);
