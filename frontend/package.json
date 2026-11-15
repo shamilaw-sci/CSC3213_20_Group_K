@@ -10,20 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
+    "@tailwindcss/vite": "^4.3.5",
     "axios": "^1.17.0",
     "lucide-react": "^1.41.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-router-dom": "^7.17.0"
-=======
-    "@tailwindcss/vite": "^4.3.3",
-    "axios": "^1.16.1",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "react-router-dom": "^7.15.1",
+    "react-router-dom": "^7.17.0",
     "tailwindcss": "^4.3.3"
->>>>>>> ashen-learning-report-module
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

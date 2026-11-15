@@ -1,8 +1,8 @@
-<<<<<<< HEAD
 /* ═══════════════════════════════════════════════════════
    CAREER INTELLIGENCE — LIGHT-THEME DESIGN SYSTEM
    ═══════════════════════════════════════════════════════ */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
 /* ── Design Tokens ───────────────────────────────────── */
 :root {
@@ -441,6 +441,43 @@ img { max-width: 100%; display: block; }
     animation-iteration-count: 1 !important;
   }
 }
-=======
-@import "tailwindcss";
->>>>>>> ashen-learning-report-module
+
+/* Career portal background carried over from the career UI branch. */
+body {
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(76, 117, 177, 0.055) 1px, transparent 1.25px),
+    linear-gradient(180deg, rgba(249, 251, 255, 0.15), rgba(244, 248, 255, 0.3)),
+    url("./assets/career-page-background.png"),
+    linear-gradient(145deg, #f1f6fd 0%, #f8faff 48%, #f4f6fc 100%);
+  background-size: 28px 28px, cover, cover, cover;
+  background-position: 0 0, center, center top, center;
+  background-attachment: scroll, scroll, fixed, scroll;
+}
+
+.app-link-button {
+  display: inline-flex;
+  min-height: 3.1rem;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+  padding: .55rem .7rem .55rem 1.35rem;
+  border: 1px solid #1d4ed8;
+  border-radius: 16px;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 9px 22px rgba(37, 99, 235, .28), inset 0 1px 0 rgba(255, 255, 255, .2);
+  font-size: .95rem;
+  font-weight: 750;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.app-link-button:hover { transform: translateY(-2px); color: #fff; background: linear-gradient(135deg, #1d4ed8, #1e40af); box-shadow: 0 13px 26px rgba(37, 99, 235, .34); }
+.app-link-button:focus-visible { outline: 3px solid rgba(59, 130, 246, .48); outline-offset: 3px; }
+.app-link-arrow { display: grid; width: 2rem; height: 2rem; flex: 0 0 2rem; place-items: center; border-radius: 50%; color: #2563eb; background: #fff; transition: transform 180ms ease; }
+.app-link-button:hover .app-link-arrow { transform: translateX(2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .app-link-button, .app-link-arrow { transition: none; }
+}

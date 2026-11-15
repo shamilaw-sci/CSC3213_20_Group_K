@@ -5,6 +5,29 @@
   min-height: 100vh;
 }
 
+.lp-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  margin-bottom: 22px;
+  padding: .42rem 1rem .42rem .45rem;
+  border: 1px solid rgba(191, 211, 239, .9);
+  border-radius: 999px;
+  color: #315276;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 4px 14px rgba(37, 74, 122, .08), inset 0 1px 0 rgba(255, 255, 255, .95);
+  font-size: .875rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.lp-back-icon { display: grid; width: 2.15rem; height: 2.15rem; flex: 0 0 2.15rem; place-items: center; border-radius: 50%; color: #2563eb; background: linear-gradient(145deg, #eff6ff, #dceafe); transition: transform 180ms ease, color 180ms ease, background 180ms ease; }
+.lp-back-link:hover { transform: translateY(-1px); border-color: #9fc0ef; color: #1d4ed8; box-shadow: 0 8px 20px rgba(37, 99, 235, .13); }
+.lp-back-link:hover .lp-back-icon { transform: translateX(-2px); color: #fff; background: linear-gradient(145deg, #347cf0, #245fd2); }
+.lp-back-link:focus-visible { outline: 3px solid rgba(59, 130, 246, .45); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .lp-back-link, .lp-back-icon { transition: none; } }
+
 /* Premium shared-theme refinements */
 .lp-wrapper { background:radial-gradient(circle at 10% 8%,rgba(25,90,190,.22),transparent 26%),#07101f; }.lp-page-header { border:1px solid rgba(149,199,247,.2); background:linear-gradient(125deg,rgba(24,62,128,.78),rgba(10,24,48,.86)); }.lp-selector-wrap,.lp-active-banner,.lp-card { border-color:rgba(143,194,242,.18)!important; background:rgba(13,28,54,.78)!important; box-shadow:0 16px 40px rgba(0,0,0,.2)!important; }.lp-selector-label,.lp-card h3,.lp-active-banner h2 { color:#edf5ff!important; }.lp-selector-btn { border-color:rgba(142,193,240,.22)!important; color:#b9cce5!important; background:rgba(7,19,39,.45)!important; }.lp-selector-btn.active,.lp-selector-btn:hover { color:#061323!important; border-color:#71e7f7!important; background:#71e7f7!important; }.lp-card-list li,.lp-active-banner p,.lp-card-count { color:#aebfd7!important; }.lp-loading { color:#b8c9e1!important; }.lp-error { border-color:rgba(255,116,128,.35)!important; color:#ffc4cb!important; background:rgba(161,35,49,.2)!important; }
 
