@@ -1,14 +1,18 @@
 const User = require("../models/User");
+const RecommendationHistory = require("../models/RecommendationHistory");
 
 const getDashboard = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const [user, totalRecommendations] = await Promise.all([
+      User.findById(req.user.id),
+      RecommendationHistory.countDocuments({ userId: req.user.id }),
+    ]);
 
     res.status(200).json({
       message: "Welcome to Dashboard",
       name: user.name,
       email: user.email,
-      totalRecommendations: 5
+      totalRecommendations,
     });
 
   } catch (error) {

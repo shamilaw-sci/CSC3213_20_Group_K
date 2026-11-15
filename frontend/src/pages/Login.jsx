@@ -23,7 +23,8 @@ function Login() {
       );
 
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      localStorage.setItem("role", response.data.role || "user");
+      navigate(response.data.role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {

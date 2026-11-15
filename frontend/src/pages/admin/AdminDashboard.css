@@ -1,0 +1,168 @@
+/* ═══════════════════════════════════════════════════════
+   ADMIN DASHBOARD
+   ═══════════════════════════════════════════════════════ */
+
+.adm-page { padding: var(--space-6); }
+
+.adm-page-header {
+  margin-bottom: var(--space-6);
+}
+.adm-page-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.adm-page-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-1);
+}
+.adm-page-sub {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+/* Stats grid */
+.adm-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.adm-stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: box-shadow var(--transition-fast);
+}
+.adm-stat-card:hover { box-shadow: var(--shadow-md); }
+
+.adm-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.adm-stat-icon--blue   { background: #dbeafe; color: #2563eb; }
+.adm-stat-icon--purple { background: #ede9fe; color: #7c3aed; }
+.adm-stat-icon--indigo { background: #e0e7ff; color: #4338ca; }
+.adm-stat-icon--green  { background: #dcfce7; color: #16a34a; }
+.adm-stat-icon--orange { background: #ffedd5; color: #ea580c; }
+
+.adm-stat-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+}
+.adm-stat-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* Sections */
+.adm-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+}
+.adm-section-header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.adm-section-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* Table */
+.adm-table-wrap { overflow-x: auto; }
+.adm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+.adm-table th,
+.adm-table td {
+  padding: var(--space-3) var(--space-5);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.adm-table th {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  background: var(--color-bg);
+}
+.adm-table tbody tr:hover { background: var(--color-bg); }
+.adm-table tbody tr:last-child td { border-bottom: none; }
+
+/* Badges */
+.adm-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.adm-badge--admin  { background: #ede9fe; color: #7c3aed; }
+.adm-badge--user   { background: #f1f5f9; color: #64748b; }
+
+/* Quick actions */
+.adm-actions-row {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-5);
+}
+
+/* Loading / error */
+.adm-loading, .adm-error {
+  padding: var(--space-10);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.adm-error { color: var(--color-danger); }
+.adm-error p { margin: 0 0 var(--space-3); }
+.adm-empty-state {
+  padding: var(--space-8) !important;
+  text-align: center !important;
+  color: var(--color-text-muted);
+}
+
+/* Skeleton */
+.adm-skeleton {
+  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-border-light) 50%, var(--color-border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-md);
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

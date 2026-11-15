@@ -14,6 +14,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  Shield,
 } from "lucide-react";
 import "./Navbar.css";
 
@@ -34,6 +35,7 @@ function Navbar() {
   const navigate  = useNavigate();
   const location  = useLocation();
   const token     = localStorage.getItem("token");
+  const role      = localStorage.getItem("role");
 
   // Close on route change
   useEffect(() => {
@@ -56,6 +58,7 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
@@ -153,6 +156,32 @@ function Navbar() {
               </li>
             ))}
           </ul>
+          {role === "admin" && (
+            <div className="sidebar-admin-section">
+              <div className="sidebar-section-label">Admin</div>
+              <ul role="list">
+                <li>
+                  <Link
+                    to="/admin"
+                    className={`sidebar-link sidebar-link--admin ${location.pathname.startsWith("/admin") ? "sidebar-link--active" : ""}`}
+                    aria-current={location.pathname.startsWith("/admin") ? "page" : undefined}
+                    onClick={() => setOpen(false)}
+                  >
+                    <Shield
+                      size={17}
+                      strokeWidth={location.pathname.startsWith("/admin") ? 2.2 : 1.8}
+                      className="sidebar-link-icon"
+                      aria-hidden="true"
+                    />
+                    <span>Admin Panel</span>
+                    {location.pathname.startsWith("/admin") && (
+                      <ChevronRight size={14} className="sidebar-link-chevron" aria-hidden="true" />
+                    )}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </nav>
 
         {/* Footer: Logout */}

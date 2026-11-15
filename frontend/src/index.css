@@ -1,7 +1,8 @@
-<<<<<<< HEAD
 /* ═══════════════════════════════════════════════════════
    CAREER INTELLIGENCE — LIGHT-THEME DESIGN SYSTEM
    ═══════════════════════════════════════════════════════ */
+@import "tailwindcss";
+
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 /* ── Design Tokens ───────────────────────────────────── */
@@ -441,6 +442,4 @@ img { max-width: 100%; display: block; }
     animation-iteration-count: 1 !important;
   }
 }
-=======
 @import "tailwindcss";
->>>>>>> ashen-learning-report-module

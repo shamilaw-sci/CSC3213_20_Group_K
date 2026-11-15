@@ -1,4 +1,5 @@
 const Profile = require("../models/Profile");
+const RecommendationHistory = require("../models/RecommendationHistory");
 const { generateCareerRecommendation } = require("../services/geminiService");
 
 const getAIRecommendation = async (req, res) => {
@@ -23,6 +24,18 @@ const getAIRecommendation = async (req, res) => {
         return res.status(503).json({ message: "AI service unavailable. Try again later." });
       }
       throw error;
+    }
+
+    try {
+      await RecommendationHistory.create({
+        userId: req.user.id,
+        recommendations: recommendation?.recommendations,
+      });
+    } catch (error) {
+      console.error("AI Recommendation History Save Error:", error);
+      return res.status(500).json({
+        message: "Unable to save AI recommendations right now.",
+      });
     }
 
     res.status(200).json({
