@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CareerDetails from "./pages/CareerDetails";
 import LearningPath from "./pages/LearningPath";
+import GuidePortal from "./guide/GuidePortal";
 
 function App() {
   return (
@@ -23,6 +24,12 @@ function App() {
         <Route
           path="/learning-path"
           element={<LearningPath />}
+        />
+
+        {/* Temporary development access for the independent Guide Portal */}
+        <Route
+          path="/guide/*"
+          element={<GuidePortal />}
         />
 
         {/* Handle unknown routes */}

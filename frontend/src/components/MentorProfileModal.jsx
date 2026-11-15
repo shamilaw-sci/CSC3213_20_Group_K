@@ -57,6 +57,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
           reference: result.bookingReference,
           mentorName: mentor.name,
           slot: result.slot,
+          status: result.status,
         });
         setSelectedSlot(null);
         if (onBookingCompleted) {
@@ -109,7 +110,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                 mentor.avatarColor || "from-blue-600 to-indigo-700"
               } text-white flex items-center justify-center font-bold text-2xl shadow-lg border-2 border-white/20 flex-shrink-0`}
             >
-              {mentor.avatarInitials || mentor.name.slice(0, 2).toUpperCase()}
+              {mentor.avatarUrl ? <img src={mentor.avatarUrl} alt="" className="w-full h-full object-cover rounded-2xl" /> : mentor.avatarInitials || mentor.name.slice(0, 2).toUpperCase()}
             </div>
 
             <div className="flex-1">
@@ -165,7 +166,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                 </div>
                 <div>
                   <h4 className="font-extrabold text-lg text-emerald-900 leading-tight">
-                    Guidance Slot Confirmed!
+                    {bookingSuccess.status === "Pending" ? "Booking Request Sent" : "Guidance Slot Confirmed!"}
                   </h4>
                   <p className="text-xs text-emerald-700">
                     Booking Reference: <span className="font-mono font-bold">{bookingSuccess.reference}</span>
@@ -186,7 +187,9 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
               </div>
 
               <p className="text-xs text-emerald-700">
-                A calendar invitation has been prepared. This slot is now marked as <strong>Not Available</strong> to other students.
+                {bookingSuccess.status === "Pending"
+                  ? <>Your request is waiting for the guide to respond. This slot is reserved and unavailable to other students in the meantime.</>
+                  : <>Your appointment is confirmed. This slot is unavailable to other students.</>}
               </p>
             </div>
           )}

@@ -15,7 +15,7 @@ function MentorCard({ mentor, onSelectMentor }) {
             className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${mentor.avatarColor || "from-blue-600 to-indigo-700"} text-white flex items-center justify-center font-bold text-lg shadow-sm flex-shrink-0`}
             aria-hidden="true"
           >
-            {mentor.avatarInitials || mentor.name.slice(0, 2).toUpperCase()}
+            {mentor.avatarUrl ? <img src={mentor.avatarUrl} alt="" className="w-full h-full object-cover rounded-2xl" /> : mentor.avatarInitials || mentor.name.slice(0, 2).toUpperCase()}
           </div>
 
           <div className="flex-1 min-w-0">

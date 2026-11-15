@@ -149,6 +149,9 @@ function MyBookingsModal({ onClose, onBookingsChanged }) {
                     <span className="text-xs font-semibold text-slate-500">
                       {item.slot.mode}
                     </span>
+                    {item.slot.bookedBy?.status === "Pending" && (
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">Awaiting guide approval</span>
+                    )}
                   </div>
 
                   <h4 className="text-base font-bold text-slate-900">

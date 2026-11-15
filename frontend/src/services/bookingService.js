@@ -26,13 +26,38 @@ export const getStoredMentors = () => {
 /**
  * Helper to persist mentors to storage and notify listeners
  */
-const saveMentors = (mentors) => {
+export const saveMentors = (mentors) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mentors));
     window.dispatchEvent(new CustomEvent(BOOKING_UPDATE_EVENT, { detail: { timestamp: Date.now() } }));
   } catch (err) {
     console.error("Failed to save mentors to localStorage:", err);
   }
+};
+
+export const updateSlotBookingStatus = (mentorId, slotId, status) => {
+  const mentors = getStoredMentors();
+  const mentor = mentors.find((item) => item.id === mentorId);
+  const slot = mentor?.slots.find((item) => item.id === slotId);
+  if (!slot?.bookedBy) return { success: false, message: "Booking not found." };
+  if (status === "Cancelled" || status === "Rejected") {
+    slot.isBooked = false;
+    slot.bookedBy = null;
+  } else {
+    slot.bookedBy.status = status;
+    slot.isBooked = true;
+  }
+  saveMentors(mentors);
+  return { success: true, slot };
+};
+
+export const upsertMentor = (mentorRecord) => {
+  const mentors = getStoredMentors();
+  const index = mentors.findIndex((item) => item.id === mentorRecord.id);
+  if (index < 0) mentors.push(mentorRecord);
+  else mentors[index] = mentorRecord;
+  saveMentors(mentors);
+  return mentorRecord;
 };
 
 /**
@@ -93,6 +118,15 @@ export const bookSlot = (mentorId, slotId, studentDetails) => {
 
   // Mark slot as booked
   slot.isBooked = true;
+  let bookingApprovalMode = "automatic";
+  if (mentorId === "guide-preview-1") {
+    try {
+      bookingApprovalMode = JSON.parse(localStorage.getItem("csc3213_guide_portal_preview_v1") || "{}").bookingApprovalMode || "manual";
+    } catch {
+      bookingApprovalMode = "manual";
+    }
+  }
+  const status = bookingApprovalMode === "manual" ? "Pending" : "Confirmed";
   slot.bookedBy = {
     bookingReference,
     studentName: studentDetails.studentName.trim(),
@@ -100,6 +134,7 @@ export const bookSlot = (mentorId, slotId, studentDetails) => {
     studentId: studentDetails.studentId ? studentDetails.studentId.trim() : "STU-REG",
     notes: studentDetails.notes ? studentDetails.notes.trim() : "",
     bookedAt: new Date().toISOString(),
+    status,
   };
 
   mentors[mentorIndex].slots[slotIndex] = slot;
@@ -115,7 +150,7 @@ export const bookSlot = (mentorId, slotId, studentDetails) => {
         id: studentDetails.studentId,
       })
     );
-  } catch (e) {
+  } catch {
     // ignore
   }
 
@@ -124,7 +159,8 @@ export const bookSlot = (mentorId, slotId, studentDetails) => {
     bookingReference,
     mentorName: mentor.name,
     slot,
-    message: "Guidance session confirmed successfully!",
+    status,
+    message: status === "Pending" ? "Your request was sent to the guide for approval." : "Guidance session confirmed successfully!",
   };
 };
 
@@ -189,7 +225,7 @@ export const getSavedStudentProfile = () => {
   try {
     const raw = localStorage.getItem(STUDENT_KEY);
     return raw ? JSON.parse(raw) : null;
-  } catch (e) {
+  } catch {
     return null;
   }
 };
