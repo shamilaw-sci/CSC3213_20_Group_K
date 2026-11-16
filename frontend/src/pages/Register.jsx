@@ -8,12 +8,15 @@ import {
   Mail,
   UserRound,
 } from "lucide-react";
+import { getRoleHome, saveAuthSession } from "../auth/session";
 import "./Auth.css";
 
 function Register() {
   const [name,     setName]     = useState("");
   const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("student");
+  const [adminInviteCode, setAdminInviteCode] = useState("");
   const [error,    setError]    = useState("");
   const [success,  setSuccess]  = useState("");
   const [loading,  setLoading]  = useState(false);
@@ -28,11 +31,13 @@ function Register() {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/register",
-        { name, email, password }
+        { name, email, password, role, ...(role === "admin" ? { adminInviteCode } : {}) }
       );
 
       setSuccess(response.data.message || "Registration successful!");
-      setTimeout(() => navigate("/login"), 1800);
+      const user = response.data.user || { name, email, role };
+      saveAuthSession({ token: response.data.token, user });
+      setTimeout(() => navigate(getRoleHome(user.role)), 700);
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
@@ -88,6 +93,28 @@ function Register() {
           {success && <div className="auth-success" role="status">{success}</div>}
 
           <form onSubmit={registerUser} className="auth-form">
+            <div className="form-group">
+              <label htmlFor="account-role">I am registering as</label>
+              <div className="auth-input-wrap">
+                <UserRound size={17} aria-hidden="true" />
+                <select id="account-role" value={role} onChange={(e) => setRole(e.target.value)}>
+                  <option value="student">Student</option>
+                  <option value="guide">Career guide</option>
+                  <option value="admin">Administrator</option>
+                </select>
+              </div>
+            </div>
+
+            {role === "admin" && (
+              <div className="form-group">
+                <label htmlFor="admin-invite-code">Administrator invite code</label>
+                <div className="auth-input-wrap">
+                  <LockKeyhole size={17} aria-hidden="true" />
+                  <input id="admin-invite-code" type="password" value={adminInviteCode} onChange={(e) => setAdminInviteCode(e.target.value)} required autoComplete="off" />
+                </div>
+              </div>
+            )}
+
             <div className="form-group">
               <label htmlFor="name">Full name</label>
               <div className="auth-input-wrap">

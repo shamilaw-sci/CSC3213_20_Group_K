@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowRight, BrainCircuit, LockKeyhole, Mail } from "lucide-react";
+import { getRoleHome, saveAuthSession } from "../auth/session";
 import "./Auth.css";
 
 function Login() {
@@ -22,9 +23,13 @@ function Login() {
         { email, password }
       );
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("role", response.data.role || "user");
-      navigate(response.data.role === "admin" ? "/admin" : "/dashboard");
+      const user = response.data.user || {
+        role: response.data.role === "user" ? "student" : response.data.role || "student",
+        name: response.data.name,
+        email,
+      };
+      saveAuthSession({ token: response.data.token, user });
+      navigate(getRoleHome(user.role));
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {

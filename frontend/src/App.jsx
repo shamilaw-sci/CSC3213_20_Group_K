@@ -18,6 +18,7 @@ import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 import ResumeHistory from "./pages/ResumeHistory";
 import Profile from "./pages/Profile";
 import CareerReport from "./pages/CareerReport";
+import GuidePortal from "./guide/GuidePortal";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -34,17 +35,23 @@ function App() {
       <Route path="/login"    element={<Login />} />
       <Route path="/register" element={<Register />} />
 
+      {/* Career exploration and guide workspace */}
+      <Route path="/career" element={<ProtectedRoute allowedRoles={["student"]}><CareerDetails /></ProtectedRoute>} />
+      <Route path="/career-details/:career" element={<ProtectedRoute allowedRoles={["student"]}><CareerDetails /></ProtectedRoute>} />
+      <Route path="/learning-path/:career" element={<ProtectedRoute allowedRoles={["student"]}><LearningPath /></ProtectedRoute>} />
+      <Route path="/guide/*" element={<ProtectedRoute allowedRoles={["guide"]}><GuidePortal /></ProtectedRoute>} />
+
       {/* Protected user routes */}
-      <Route path="/dashboard"        element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/career-details"   element={<ProtectedRoute><CareerDetails /></ProtectedRoute>} />
-      <Route path="/ai-recommendation"element={<ProtectedRoute><AIRecommendation /></ProtectedRoute>} />
-      <Route path="/ai-chat"          element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
-      <Route path="/learning-path"    element={<ProtectedRoute><LearningPath /></ProtectedRoute>} />
-      <Route path="/skill-gap"        element={<ProtectedRoute><SkillGap /></ProtectedRoute>} />
-      <Route path="/resume-analyzer"  element={<ProtectedRoute><ResumeAnalyzer /></ProtectedRoute>} />
-      <Route path="/resume-history"   element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
-      <Route path="/profile"          element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-      <Route path="/career-report"    element={<ProtectedRoute><CareerReport /></ProtectedRoute>} />
+      <Route path="/dashboard"        element={<ProtectedRoute allowedRoles={["student"]}><Dashboard /></ProtectedRoute>} />
+      <Route path="/career-details"   element={<ProtectedRoute allowedRoles={["student"]}><CareerDetails /></ProtectedRoute>} />
+      <Route path="/ai-recommendation"element={<ProtectedRoute allowedRoles={["student"]}><AIRecommendation /></ProtectedRoute>} />
+      <Route path="/ai-chat"          element={<ProtectedRoute allowedRoles={["student"]}><AIChat /></ProtectedRoute>} />
+      <Route path="/learning-path"    element={<ProtectedRoute allowedRoles={["student"]}><LearningPath /></ProtectedRoute>} />
+      <Route path="/skill-gap"        element={<ProtectedRoute allowedRoles={["student"]}><SkillGap /></ProtectedRoute>} />
+      <Route path="/resume-analyzer"  element={<ProtectedRoute allowedRoles={["student"]}><ResumeAnalyzer /></ProtectedRoute>} />
+      <Route path="/resume-history"   element={<ProtectedRoute allowedRoles={["student"]}><ResumeHistory /></ProtectedRoute>} />
+      <Route path="/profile"          element={<ProtectedRoute allowedRoles={["student"]}><Profile /></ProtectedRoute>} />
+      <Route path="/career-report"    element={<ProtectedRoute allowedRoles={["student"]}><CareerReport /></ProtectedRoute>} />
 
       {/* Admin routes */}
       <Route path="/admin"         element={<AdminRoute><AdminDashboard /></AdminRoute>} />

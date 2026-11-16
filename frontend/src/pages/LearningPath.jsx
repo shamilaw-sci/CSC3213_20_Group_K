@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -74,90 +74,84 @@ function LearningPath() {
   const CareerIcon = CAREER_ICONS[selected] || Briefcase;
 
   return (
-    <div className="page-shell learning-path-theme">
+    <div className="page-shell">
       <Navbar />
 
-      <main className="main-content lp-page">
+      <div className="main-content lp-page">
         <div className="lp-inner">
-          <header className="lp-page-header">
-            <div className="lp-page-header-copy">
-              <span className="lp-page-kicker">
-                <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
-                Personalized learning roadmap
-              </span>
-              <h1>Your Learning Path</h1>
-              <p>
-                Choose a career to explore its skills, courses, projects, and
-                learning resources in one clear roadmap.
-              </p>
-            </div>
-            <div className="lp-header-art" aria-hidden="true">
-              <BookOpen size={44} strokeWidth={1.4} />
-            </div>
-          </header>
 
-          <section className="lp-selector-wrap" aria-label="Career selection">
-            <div className="lp-selector-heading">
-              <div>
-                <span className="lp-section-eyebrow">Choose your direction</span>
-                <h2>Select a career track</h2>
-                <p>Your selection loads the matching career roadmap.</p>
-              </div>
-              <span className="lp-track-count">{CAREERS.length} career tracks</span>
+          <Link to="/career" className="lp-back-link" aria-label="Back to career details">
+            <span className="lp-back-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5" />
+                <path d="m12 19-7-7 7-7" />
+              </svg>
+            </span>
+            <span>Back to Career Details</span>
+          </Link>
+
+          {/* Page Header */}
+          <div className="page-header">
+            <div className="page-kicker">
+              <BookOpen size={13} strokeWidth={2} aria-hidden="true" />
+              Learning Roadmap
             </div>
+            <h1>Your Learning Path</h1>
+            <p>
+              Select a career to reveal a step-by-step roadmap with skills,
+              courses, projects, and resources.
+            </p>
+          </div>
+
+          {/* Career Selector */}
+          <div className="lp-selector-wrap">
             <div className="lp-selector-grid" role="tablist" aria-label="Select a career track">
-              {CAREERS.map((c, index) => {
+              {CAREERS.map((c) => {
                 const CIcon = CAREER_ICONS[c] || Briefcase;
                 return (
                   <button
                     key={c}
-                    type="button"
                     role="tab"
-                    id={`lp-career-tab-${index}`}
-                    aria-controls="learning-path-panel"
                     aria-selected={selected === c}
                     className={`lp-selector-btn ${selected === c ? "active" : ""}`}
                     onClick={() => setSelected(c)}
                   >
-                    <CIcon size={15} strokeWidth={1.8} aria-hidden="true" />
+                    <CIcon size={14} strokeWidth={1.8} aria-hidden="true" />
                     {c}
                   </button>
                 );
               })}
             </div>
-          </section>
+          </div>
 
+          {/* Loading */}
           {loading && (
-            <div className="lp-loading" aria-live="polite" role="status">
-              <div className="lp-spinner" aria-hidden="true" />
+            <div className="lp-loading" aria-live="polite">
+              <div className="spinner spinner-lg" />
               <p>Loading your learning path…</p>
             </div>
           )}
 
-          {error && <div className="alert alert-error lp-error" role="alert">{error}</div>}
+          {/* Error */}
+          {error && <div className="alert alert-error" role="alert">{error}</div>}
 
+          {/* Path Content */}
           {!loading && !error && path && (
             <>
-              <section
-                className="lp-banner"
-                id="learning-path-panel"
-                role="tabpanel"
-                aria-labelledby={`lp-career-tab-${CAREERS.indexOf(selected)} lp-active-career-title`}
-              >
+              {/* Active career banner */}
+              <div className="lp-banner">
                 <div className="lp-banner-icon" aria-hidden="true">
                   <CareerIcon size={22} strokeWidth={1.8} />
                 </div>
                 <div className="lp-banner-body">
-                  <span className="lp-banner-kicker">Active career path</span>
-                  <h2 id="lp-active-career-title">{path.career} Learning Path</h2>
+                  <h2>{path.career} Learning Path</h2>
                   <p>Follow this roadmap to become job-ready for a {path.career} role.</p>
                 </div>
                 <div className="lp-banner-stats" aria-label="Path summary">
                   {[
-                    { n: (path.skills || []).length, label: "Skills" },
-                    { n: (path.courses || []).length, label: "Courses" },
+                    { n: (path.skills   || []).length, label: "Skills" },
+                    { n: (path.courses  || []).length, label: "Courses" },
                     { n: (path.projects || []).length, label: "Projects" },
-                    { n: (path.resources || []).length, label: "Resources" },
                   ].map(({ n, label }) => (
                     <div className="lp-banner-stat" key={label}>
                       <span>{n}</span>
@@ -165,60 +159,52 @@ function LearningPath() {
                     </div>
                   ))}
                 </div>
-              </section>
-
-              <div className="lp-roadmap-heading">
-                <div>
-                  <span className="lp-section-eyebrow">Roadmap sections</span>
-                  <h2>Explore your learning plan</h2>
-                </div>
               </div>
 
+              {/* 2×2 Card Grid */}
               <div className="lp-card-grid">
                 {SECTION_CONFIG.map(({ key, title, Icon, color, emptyMsg }) => {
                   const items = path[key] || [];
                   return (
-                    <section
-                      className={`lp-card lp-card--${color} lp-card--${key}`}
+                    <div
+                      className={`lp-card lp-card--${color}`}
                       key={key}
-                      aria-labelledby={`lp-section-${key}`}
+                      aria-label={title}
                     >
                       <div className="lp-card-header">
                         <div className="lp-card-icon" aria-hidden="true">
                           <Icon size={18} strokeWidth={1.8} />
                         </div>
-                        <div className="lp-card-heading">
-                          <h3 id={`lp-section-${key}`}>{title}</h3>
+                        <div>
+                          <h3>{title}</h3>
                           <span className="lp-card-count">
                             {items.length} item{items.length !== 1 ? "s" : ""}
                           </span>
                         </div>
                       </div>
 
-                      {items.length > 0 ? (
-                        <ul className="lp-card-list">
-                          {items.map((item, i) => (
-                            <li className="lp-card-item" key={i}>
+                      <ul className="lp-card-list">
+                        {items.length > 0 ? (
+                          items.map((item, i) => (
+                            <li key={i}>
                               <span className="lp-list-dot" aria-hidden="true" />
-                              <span className="lp-card-item-text">{item}</span>
+                              <span>{item}</span>
                             </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <div className="lp-empty">
-                          <span aria-hidden="true">—</span>
-                          <p>{emptyMsg}</p>
-                        </div>
-                      )}
-                    </section>
+                          ))
+                        ) : (
+                          <li className="lp-empty">{emptyMsg}</li>
+                        )}
+                      </ul>
+                    </div>
                   );
                 })}
               </div>
             </>
           )}
+
         </div>
         <Footer />
-      </main>
+      </div>
     </div>
   );
 }
