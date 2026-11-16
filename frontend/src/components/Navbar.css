@@ -36,6 +36,7 @@
   text-decoration: none;
 }
 .pub-nav-link:hover { color: var(--color-text); }
+.pub-nav-actions > button.pub-nav-link { padding: 0; border: 0; background: transparent; font: inherit; cursor: pointer; }
 
 /* ── Brand ───────────────────────────────────────────── */
 .nav-brand {

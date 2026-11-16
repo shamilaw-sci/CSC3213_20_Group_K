@@ -88,6 +88,8 @@
 .gp-profile-dropdown > a { display: flex; min-height: 40px; align-items: center; gap: 10px; padding: 0 9px; border-radius: 9px; color: #61738b; font-size: .74rem; font-weight: 650; text-decoration: none; }
 .gp-profile-dropdown > a:hover { color: #2868d7; background: #f2f7ff; }
 .gp-profile-dropdown > a > svg:last-child { margin-left: auto; color: #a0adbd; }
+.gp-profile-dropdown > .gp-profile-signout { display: flex; width: 100%; min-height: 40px; align-items: center; gap: 10px; padding: 0 9px; border: 0; border-radius: 9px; color: #61738b; background: transparent; font: inherit; font-size: .74rem; font-weight: 650; text-align: left; cursor: pointer; }
+.gp-profile-dropdown > .gp-profile-signout:hover { color: #c24143; background: #fff2f2; }
 @keyframes gp-menu-enter { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 .gp-theme-toggle { display: inline-flex; min-height: 36px; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid #e3eaf2; border-radius: 10px; color: #60748d; background: #fff; cursor: pointer; font-size: .68rem !important; font-weight: 700 !important; transition: color 150ms ease, border-color 150ms ease, background 150ms ease; }
 .gp-theme-toggle:hover { border-color: #c6d9f3; color: #2868d7; background: #f8fbff; }

@@ -6,10 +6,11 @@ const {
 } = require("../controllers/profileController");
 
 const protect = require("../middleware/authMiddleware");
+const requireRole = require("../middleware/requireRole");
 
 const router = express.Router();
 
-router.post("/", protect, createProfile);
-router.get("/", protect, getProfile);
+router.post("/", protect, requireRole("student"), createProfile);
+router.get("/", protect, requireRole("student"), getProfile);
 
 module.exports = router;

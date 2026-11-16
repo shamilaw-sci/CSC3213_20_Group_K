@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const protect = require("../middleware/authMiddleware");
+const requireRole = require("../middleware/requireRole");
 const {
   analyzeResume,
   getResumeHistory,
@@ -51,9 +52,9 @@ const uploadResume = (req, res, next) => {
 const router = express.Router();
 
 // POST /api/resume/analyze
-router.post("/analyze", protect, uploadResume, analyzeResume);
+router.post("/analyze", protect, requireRole("student"), uploadResume, analyzeResume);
 
 // GET /api/resume/history
-router.get("/history", protect, getResumeHistory);
+router.get("/history", protect, requireRole("student"), getResumeHistory);
 
 module.exports = router;
