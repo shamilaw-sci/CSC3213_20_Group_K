@@ -7,7 +7,8 @@ const {
 } = require("../controllers/dashboardController");
 
 const protect = require("../middleware/authMiddleware");
+const requireRole = require("../middleware/requireRole");
 
-router.get("/", protect, getDashboard);
+router.get("/", protect, requireRole("student"), getDashboard);
 
 module.exports = router;

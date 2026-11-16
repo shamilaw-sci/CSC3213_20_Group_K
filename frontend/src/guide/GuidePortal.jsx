@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   CAREER_PATH_OPTIONS,
   loadGuidePortalState,
@@ -9,6 +9,7 @@ import {
 import "./GuidePortal.css";
 import { BOOKING_UPDATE_EVENT } from "../services/bookingService";
 import { hydrateGuideFromStudent, respondToGuideBooking, syncGuideToStudent } from "./guideStudentBridge";
+import { clearAuthSession, getAuthUser } from "../auth/session";
 
 const NAV_ITEMS = [
   { label: "Dashboard", path: "/guide/dashboard", icon: "grid" },
@@ -109,6 +110,8 @@ export default function GuidePortal() {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const authUser = getAuthUser();
   const currentItem = NAV_ITEMS.find((item) => item.path === location.pathname);
   const routeKey = location.pathname.replace("/guide/", "");
   const [title, subtitle] = PAGE_TITLES[routeKey] || [];
@@ -149,6 +152,11 @@ export default function GuidePortal() {
       // Theme still changes for this session if browser storage is unavailable.
     }
     setTheme(nextTheme);
+  };
+
+  const signOut = () => {
+    clearAuthSession();
+    navigate("/login", { replace: true });
   };
 
   const commit = (change) => {
@@ -211,14 +219,15 @@ export default function GuidePortal() {
             <div className="gp-profile-menu-wrap" ref={profileMenuRef}>
               <button className={`gp-profile-menu-trigger ${profileMenuOpen ? "is-open" : ""}`} type="button" aria-label="Open guide profile menu" aria-haspopup="menu" aria-expanded={profileMenuOpen} onClick={() => setProfileMenuOpen((open) => !open)}>
                 <GuideAvatar profile={data.profile} className="gp-topbar-avatar" />
-                <span className="gp-profile-trigger-name">{data.profile.fullName.split(/\s+/)[0]}</span>
+                <span className="gp-profile-trigger-name">{(authUser?.name || data.profile.fullName).split(/\s+/)[0]}</span>
                 <svg className="gp-profile-chevron" width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </button>
               {profileMenuOpen && <div className="gp-profile-dropdown" role="menu" aria-label="Guide account menu">
-                <div className="gp-profile-dropdown-header"><GuideAvatar profile={data.profile} className="gp-dropdown-avatar" /><div><strong>{data.profile.fullName}</strong><span>{data.profile.professionalTitle || data.profile.guideType}</span></div></div>
+                <div className="gp-profile-dropdown-header"><GuideAvatar profile={data.profile} className="gp-dropdown-avatar" /><div><strong>{authUser?.name || data.profile.fullName}</strong><span>{authUser?.email || data.profile.professionalTitle || data.profile.guideType}</span></div></div>
                 <div className="gp-profile-dropdown-divider" />
                 <Link to="/guide/profile" role="menuitem" onClick={() => setProfileMenuOpen(false)}><Icon name="user" size={17} /><span>My Profile</span><Icon name="arrow" size={15} /></Link>
                 <Link to="/guide/settings" role="menuitem" onClick={() => setProfileMenuOpen(false)}><Icon name="settings" size={17} /><span>Settings</span><Icon name="arrow" size={15} /></Link>
+                <button type="button" className="gp-profile-signout" role="menuitem" onClick={signOut}><Icon name="arrow" size={17} /><span>Sign out</span></button>
               </div>}
             </div>
           </div>

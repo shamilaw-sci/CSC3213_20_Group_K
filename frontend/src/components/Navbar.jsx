@@ -16,6 +16,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import "./Navbar.css";
+import { clearAuthSession, getAuthUser, getRoleHome } from "../auth/session";
 
 const NAV_ITEMS = [
   { to: "/dashboard",        label: "Dashboard",        Icon: LayoutDashboard },
@@ -34,6 +35,8 @@ function Navbar() {
   const navigate  = useNavigate();
   const location  = useLocation();
   const token     = localStorage.getItem("token");
+  const authUser  = getAuthUser();
+  const roleHome  = getRoleHome(authUser?.role);
 
   // Close on route change
   useEffect(() => {
@@ -55,14 +58,14 @@ function Navbar() {
   }, [open]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    clearAuthSession();
+    navigate("/login", { replace: true });
   };
 
   const isActive = (to) => location.pathname === to;
 
-  if (!token) {
-    // Public top bar for unauthenticated users
+  if (!token || authUser?.role !== "student") {
+    // Use the compact public navigation for signed-out users and non-student roles.
     return (
       <nav className="pub-nav" aria-label="Main navigation">
         <div className="pub-nav-inner">
@@ -73,8 +76,13 @@ function Navbar() {
             <span className="nav-brand-text">Career Intelligence</span>
           </Link>
           <div className="pub-nav-actions">
-            <Link to="/login"    className="pub-nav-link">Sign in</Link>
-            <Link to="/register" className="btn btn-primary btn-sm">Get started</Link>
+            {token ? <>
+              <Link to={roleHome} className="pub-nav-link">Open {authUser?.role === "guide" ? "Guide Portal" : authUser?.role === "admin" ? "Admin Portal" : "Dashboard"}</Link>
+              <button type="button" className="pub-nav-link" onClick={handleLogout}>Sign out</button>
+            </> : <>
+              <Link to="/login"    className="pub-nav-link">Sign in</Link>
+              <Link to="/register" className="btn btn-primary btn-sm">Get started</Link>
+            </>}
           </div>
         </div>
       </nav>

@@ -11,6 +11,9 @@
 .auth-card-header h2 { color: var(--color-text); }
 .auth-card-header p, .auth-switch { color: var(--color-text-muted); }
 .auth-form label { color: var(--color-text-secondary); }
+.auth-form select { min-height: 42px; padding: 0 .875rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-text); background: var(--color-surface); font: inherit; }
+.auth-field-hint { color: var(--color-text-muted); font-size: var(--text-xs); line-height: 1.5; }
+.auth-session-loading { min-height: 100vh; display: grid; place-items: center; color: var(--color-text-muted); background: var(--color-background); font-weight: 600; }
 .auth-btn { background: var(--color-primary); border-color: var(--color-primary); border-radius: var(--radius-md); font-weight: 700; }
 .auth-btn:hover:not(:disabled) { background: var(--color-primary-hover); }
 .auth-error { background: var(--color-danger-light); border-color: var(--color-danger-border); color: var(--color-danger); }

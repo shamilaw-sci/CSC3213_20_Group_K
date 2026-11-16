@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 const protect = async (req, res, next) => {
   let token;
@@ -15,9 +16,13 @@ const protect = async (req, res, next) => {
         process.env.JWT_SECRET
       );
 
-      req.user = decoded;
+      const user = await User.findById(decoded.id).select("_id role");
+      if (!user) {
+        return res.status(401).json({ message: "Account no longer exists." });
+      }
+      req.user = { id: user._id.toString(), role: user.role || "student" };
 
-      next();
+      return next();
     } catch (error) {
       return res.status(401).json({
         message: "Invalid token",

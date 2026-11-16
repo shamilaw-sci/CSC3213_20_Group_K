@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Brain } from "lucide-react";
+import { getRoleHome, saveAuthSession } from "../auth/session";
 import "./Auth.css";
 
 function Login() {
@@ -22,8 +23,8 @@ function Login() {
         { email, password }
       );
 
-      localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      saveAuthSession(response.data);
+      navigate(getRoleHome(response.data.user.role), { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
@@ -58,7 +59,7 @@ function Login() {
         <div className="auth-card">
           <div className="auth-card-header">
             <h2>Welcome back</h2>
-            <p>Sign in to continue to your dashboard</p>
+            <p>Sign in and we’ll open the workspace for your account.</p>
           </div>
 
           {error && <div className="auth-error" role="alert">{error}</div>}

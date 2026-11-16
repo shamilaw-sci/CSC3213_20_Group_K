@@ -1,0 +1,17 @@
+.admin-pending-page { min-height: 100vh; padding: 24px clamp(20px, 5vw, 72px); background: radial-gradient(ellipse at 50% 0%, #e9efff 0, transparent 44%), var(--color-background); color: var(--color-text); }
+.admin-pending-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; max-width: 1240px; margin: 0 auto; }
+.admin-pending-brand { display: flex; align-items: center; gap: 10px; color: var(--color-text); text-decoration: none; font-weight: 800; }
+.admin-pending-brand > span { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 12px; color: white; background: var(--color-primary); }
+.admin-pending-brand small { padding: 4px 7px; border-radius: 6px; color: var(--color-primary); background: var(--color-primary-light); font-size: 10px; letter-spacing: .08em; }
+.admin-pending-account { display: flex; align-items: center; gap: 16px; color: var(--color-text-secondary); font-size: 14px; }
+.admin-pending-account button { display: flex; align-items: center; gap: 7px; border: 0; color: var(--color-text-muted); background: transparent; cursor: pointer; font: inherit; }
+.admin-pending-card { width: min(100%, 680px); margin: clamp(88px, 15vh, 160px) auto 0; padding: clamp(28px, 5vw, 54px); border: 1px solid var(--color-border); border-radius: 24px; background: var(--color-surface); box-shadow: var(--shadow-xl); text-align: center; }
+.admin-pending-icon { display: grid; width: 62px; height: 62px; margin: 0 auto 23px; place-items: center; border-radius: 20px; color: var(--color-primary); background: var(--color-primary-light); }
+.admin-pending-eyebrow { margin-bottom: 12px; color: var(--color-primary); font-size: 12px; font-weight: 800; letter-spacing: .13em; }
+.admin-pending-card h1 { max-width: 540px; margin: 0 auto 14px; font-size: clamp(28px, 4vw, 42px); line-height: 1.15; letter-spacing: -.04em; }
+.admin-pending-copy { max-width: 520px; margin: 0 auto; color: var(--color-text-muted); line-height: 1.75; }
+.admin-pending-status { display: inline-flex; align-items: center; gap: 9px; margin: 27px 0 20px; padding: 9px 13px; border: 1px solid var(--color-warning-border); border-radius: 999px; color: var(--color-text-secondary); background: var(--color-warning-light); font-size: 13px; font-weight: 700; }
+.admin-pending-status span { width: 8px; height: 8px; border-radius: 50%; background: var(--color-warning); }
+.admin-pending-home { display: block; color: var(--color-primary); font-size: 14px; font-weight: 700; text-decoration: none; }
+.admin-pending-home:hover { text-decoration: underline; }
+@media (max-width: 560px) { .admin-pending-header { align-items: flex-start; } .admin-pending-account { align-items: flex-end; flex-direction: column; gap: 6px; } .admin-pending-card { margin-top: 72px; } }

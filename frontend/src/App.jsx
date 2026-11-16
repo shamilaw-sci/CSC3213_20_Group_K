@@ -13,6 +13,7 @@ import ResumeHistory from "./pages/ResumeHistory";
 import SkillGap from "./pages/SkillGap";
 import GuidePortal from "./guide/GuidePortal";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminPortalPending from "./pages/AdminPortalPending";
 
 function App() {
   return (
@@ -27,16 +28,17 @@ function App() {
       <Route path="/career-details/:career" element={<CareerDetails />} />
       <Route path="/learning-path" element={<LearningPath />} />
       <Route path="/learning-path/:career" element={<LearningPath />} />
-      <Route path="/guide/*" element={<GuidePortal />} />
+      <Route path="/guide/*" element={<ProtectedRoute allowedRoles={["guide"]}><GuidePortal /></ProtectedRoute>} />
+      <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin"]}><AdminPortalPending /></ProtectedRoute>} />
 
       {/* Signed-in student tools */}
-      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/ai-recommendation" element={<ProtectedRoute><AIRecommendation /></ProtectedRoute>} />
-      <Route path="/skill-gap" element={<ProtectedRoute><SkillGap /></ProtectedRoute>} />
-      <Route path="/ai-chat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
-      <Route path="/resume-analyzer" element={<ProtectedRoute><ResumeAnalyzer /></ProtectedRoute>} />
-      <Route path="/resume-history" element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["student"]}><Dashboard /></ProtectedRoute>} />
+      <Route path="/ai-recommendation" element={<ProtectedRoute allowedRoles={["student"]}><AIRecommendation /></ProtectedRoute>} />
+      <Route path="/skill-gap" element={<ProtectedRoute allowedRoles={["student"]}><SkillGap /></ProtectedRoute>} />
+      <Route path="/ai-chat" element={<ProtectedRoute allowedRoles={["student"]}><AIChat /></ProtectedRoute>} />
+      <Route path="/resume-analyzer" element={<ProtectedRoute allowedRoles={["student"]}><ResumeAnalyzer /></ProtectedRoute>} />
+      <Route path="/resume-history" element={<ProtectedRoute allowedRoles={["student"]}><ResumeHistory /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute allowedRoles={["student"]}><Profile /></ProtectedRoute>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
