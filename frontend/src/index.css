@@ -96,6 +96,7 @@
 }
 
 /* ── Base Reset ──────────────────────────────────────── */
+@layer base {
 *,
 *::before,
 *::after {
@@ -179,6 +180,7 @@ input::placeholder, textarea::placeholder {
 ul { list-style: none; }
 
 img { max-width: 100%; display: block; }
+}
 
 /* ── Focus Styles (Keyboard Nav) ─────────────────────── */
 :focus-visible {
