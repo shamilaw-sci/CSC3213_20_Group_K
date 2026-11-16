@@ -136,6 +136,7 @@ function AIChat() {
               <h2>How can I help shape your career?</h2>
               <p>Ask a question or choose a prompt to start a personalised conversation.</p>
             </div>
+            
           )}
 
           <div className="ai-suggestions" aria-label="Suggested questions">
