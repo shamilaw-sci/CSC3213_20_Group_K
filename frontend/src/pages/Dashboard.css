@@ -125,6 +125,75 @@
   box-shadow: var(--shadow-xs);
 }
 
+/* ── Student guide booking CTA ───────────────────────── */
+.db-booking-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(112deg, #eef4ff 0%, #fff 72%);
+  box-shadow: var(--shadow-sm);
+}
+.db-booking-icon {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: 0 0 3.5rem;
+  place-items: center;
+  border: 1px solid #dbe6ff;
+  border-radius: 1.1rem;
+  background: #fff;
+  color: var(--color-primary);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, .09);
+}
+.db-booking-copy { flex: 1; min-width: 0; }
+.db-booking-kicker {
+  display: block;
+  margin-bottom: .25rem;
+  color: var(--color-primary);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+}
+.db-booking-copy h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.db-booking-copy p {
+  margin: .25rem 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.db-booking-button {
+  display: inline-flex;
+  min-height: 3rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  padding: .75rem 1.1rem;
+  border: 1px solid #2452d3;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3b66e8, #244ed0);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(37, 80, 210, .23);
+  font-size: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.db-booking-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #2d59dc, #1e40af);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(37, 80, 210, .29);
+}
+.db-booking-button:focus-visible { outline: 3px solid #93b4ff; outline-offset: 3px; }
+
 /* ── Section Header ──────────────────────────────────── */
 .db-section-header {
   display: flex;
@@ -430,4 +499,10 @@
   .db-inner { padding: var(--space-5) var(--space-4); }
   .db-stat-grid { grid-template-columns: 1fr 1fr; gap: var(--space-3); }
   .db-hero-title { font-size: var(--text-2xl); }
+  .db-booking-cta { align-items: flex-start; flex-wrap: wrap; gap: var(--space-3); padding: 1rem; }
+  .db-booking-icon { width: 2.9rem; height: 2.9rem; flex-basis: 2.9rem; border-radius: .9rem; }
+  .db-booking-copy { flex-basis: calc(100% - 4rem); }
+  .db-booking-copy h2 { font-size: 1rem; }
+  .db-booking-copy p { font-size: var(--text-xs); }
+  .db-booking-button { width: 100%; }
 }
