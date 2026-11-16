@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
   LayoutDashboard, Target, FileText, BarChart3, User, MessageSquare,
-  BookOpen, ArrowRight, TrendingUp, AlertCircle, Brain,
+  BookOpen, ArrowRight, TrendingUp, AlertCircle, Brain, CalendarDays,
 } from "lucide-react";
 import "./Dashboard.css";
 
@@ -190,6 +190,26 @@ function Dashboard() {
                 </Link>
               ))}
             </div>
+          </section>
+
+          {/* ── Student guide booking CTA ── */}
+          <section className="db-booking-cta" aria-labelledby="booking-cta-heading">
+            <div className="db-booking-icon" aria-hidden="true">
+              <CalendarDays size={23} strokeWidth={1.8} />
+            </div>
+            <div className="db-booking-copy">
+              <span className="db-booking-kicker">PERSONAL CAREER GUIDANCE</span>
+              <h2 id="booking-cta-heading">Get guidance from a real person</h2>
+              <p>Browse available guides and book a one-to-one appointment for the career path you’re exploring.</p>
+            </div>
+            <Link
+              to="/career"
+              onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
+              className="db-booking-button"
+            >
+              Book an appointment
+              <ArrowRight size={17} strokeWidth={2} aria-hidden="true" />
+            </Link>
           </section>
 
           {/* ── Stat Cards ── */}
