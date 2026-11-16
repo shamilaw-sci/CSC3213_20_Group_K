@@ -1,4 +1,5 @@
 import React from "react";
+import "./MentorBooking.css";
 
 function MentorCard({ mentor, onSelectMentor }) {
   if (!mentor) return null;
@@ -7,10 +8,10 @@ function MentorCard({ mentor, onSelectMentor }) {
   const hasAvailableSlots = availableSlotsCount > 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1 p-6 flex flex-col justify-between">
-      <div>
+    <article className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1 p-6 flex flex-col justify-between mentor-card">
+      <div className="mentor-card-content">
         {/* Mentor Header Profile */}
-        <div className="flex items-start gap-4 mb-4">
+        <div className="flex items-start gap-4 mb-4 mentor-card-header">
           <div
             className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${mentor.avatarColor || "from-blue-600 to-indigo-700"} text-white flex items-center justify-center font-bold text-lg shadow-sm flex-shrink-0`}
             aria-hidden="true"
@@ -20,7 +21,7 @@ function MentorCard({ mentor, onSelectMentor }) {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h4 className="font-bold text-slate-900 text-lg leading-snug truncate">
+              <h4 className="font-bold text-slate-900 text-lg leading-snug truncate mentor-card-name">
                 {mentor.name}
               </h4>
               <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
@@ -42,12 +43,12 @@ function MentorCard({ mentor, onSelectMentor }) {
         </div>
 
         {/* Bio Excerpt */}
-        <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed mb-4">
+        <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed mb-4 mentor-card-bio">
           {mentor.bio}
         </p>
 
         {/* Focus Areas */}
-        <div className="mb-4">
+        <div className="mb-4 mentor-card-specialties">
           <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
             Guidance Specialties
           </p>
@@ -70,7 +71,7 @@ function MentorCard({ mentor, onSelectMentor }) {
       </div>
 
       {/* Card Footer with Availability & Action */}
-      <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 mt-2">
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 mt-2 mentor-card-footer">
         <div className="flex items-center gap-2">
           <span
             className={`w-2.5 h-2.5 rounded-full ${
@@ -114,7 +115,7 @@ function MentorCard({ mentor, onSelectMentor }) {
           </svg>
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 

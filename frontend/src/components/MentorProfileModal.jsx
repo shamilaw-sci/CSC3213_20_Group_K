@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { bookSlot, getSavedStudentProfile } from "../services/bookingService";
+import "./MentorBooking.css";
 
 function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -75,14 +76,14 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 mentor-modal-overlay"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-mentor-name"
     >
-      <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200 mentor-modal-shell">
         {/* Modal Top Header Banner */}
-        <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white p-6 sm:p-8">
+        <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white p-6 sm:p-8 mentor-modal-header">
           <button
             type="button"
             onClick={onClose}
@@ -145,7 +146,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
         </div>
 
         {/* Modal Body Content */}
-        <div className="p-6 sm:p-8 max-h-[70vh] overflow-y-auto space-y-8">
+        <div className="p-6 sm:p-8 max-h-[70vh] overflow-y-auto space-y-8 mentor-modal-body">
           {/* Success Banner if Booked */}
           {bookingSuccess && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-emerald-950 flex flex-col gap-3">
@@ -223,7 +224,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
 
           {/* Section 2: Availability Slots Schedule */}
           <div>
-            <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="flex items-center justify-between gap-4 mb-3 mentor-slots-heading">
               <div>
                 <h4 className="text-base font-bold text-slate-900">
                   Select an Available Guidance Slot
@@ -233,7 +234,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 text-xs font-medium">
+              <div className="flex items-center gap-3 text-xs font-medium mentor-slots-legend">
                 <span className="inline-flex items-center gap-1 text-emerald-700">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                   Available
@@ -267,7 +268,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
             )}
 
             {/* Slots Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mentor-slot-grid">
               {mentor.slots.map((slot) => {
                 const isSelected = selectedSlot?.id === slot.id;
                 const isBooked = slot.isBooked;
@@ -276,17 +277,27 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                   <div
                     key={slot.id}
                     onClick={() => !isBooked && handleSlotSelect(slot)}
-                    className={`rounded-2xl p-4 border transition-all text-left flex flex-col justify-between ${
+                    onKeyDown={(event) => {
+                      if (!isBooked && (event.key === "Enter" || event.key === " ")) {
+                        event.preventDefault();
+                        handleSlotSelect(slot);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={isBooked ? -1 : 0}
+                    aria-pressed={isSelected}
+                    aria-disabled={isBooked}
+                    className={`rounded-2xl p-4 border transition-all text-left flex flex-col justify-between mentor-slot-card ${
                       isBooked
-                        ? "bg-slate-50/80 border-slate-200 opacity-60 cursor-not-allowed"
+                        ? "is-booked"
                         : isSelected
-                        ? "bg-blue-50/80 border-blue-600 ring-2 ring-blue-600/20 shadow-sm cursor-pointer"
-                        : "bg-white border-slate-200 hover:border-blue-400 hover:shadow-sm cursor-pointer"
+                        ? "is-selected"
+                        : "is-available"
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="text-xs font-bold text-slate-800">
+                      <div className="flex items-center justify-between gap-2 mb-2 mentor-slot-heading">
+                        <span className="text-xs font-bold text-slate-800 mentor-slot-date">
                           {slot.date}
                         </span>
 
@@ -303,7 +314,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                         )}
                       </div>
 
-                      <div className="flex items-center gap-1.5 text-sm font-extrabold text-slate-900">
+                      <div className="flex items-center gap-1.5 text-sm font-extrabold text-slate-900 mentor-slot-time">
                         <svg
                           width="14"
                           height="14"
@@ -321,7 +332,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                         <span>{slot.startTime} - {slot.endTime}</span>
                       </div>
 
-                      <div className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
+                      <div className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 mentor-slot-location">
                         <svg
                           width="12"
                           height="12"
@@ -339,7 +350,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
                       </div>
                     </div>
 
-                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs mentor-slot-meta">
                       <span className="font-semibold text-slate-500">
                         {slot.mode}
                       </span>
@@ -486,7 +497,7 @@ function MentorProfileModal({ mentor, onClose, onBookingCompleted }) {
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+        <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 mentor-modal-footer">
           <span>CSC3213 Academic Guidance Network</span>
           <button
             type="button"
